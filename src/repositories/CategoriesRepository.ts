@@ -12,6 +12,12 @@ export default class CategoriesRepository {
         this.repository = [];
     }
 
+    public findByName(name: string): Category {
+        const find = this.repository.find((category) => category.name === name);
+
+        return find;
+    }
+
     public create({ name, description }: ICreateCategoryDTO): void {
         const category = new Category();
 
