@@ -1,5 +1,5 @@
 import Category from '../models/Category';
-import ICreateCategoryDTO from './dtos/ICreateCategoryDTO';
+import ICreateCategoryDTO from '../useCases/createCategory/ICreateCategoryDTO';
 import { ICategoriesRepository } from './ICategoriesRepository';
 
 export default class CategoriesRepository implements ICategoriesRepository {
