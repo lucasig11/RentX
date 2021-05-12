@@ -1,12 +1,21 @@
-import Category from '../models/Category';
-import ICreateCategoryDTO from '../useCases/createCategory/ICreateCategoryDTO';
-import { ICategoriesRepository } from './ICategoriesRepository';
+import Category from '../../models/Category';
+import ICreateCategoryDTO from '../../useCases/createCategory/ICreateCategoryDTO';
+import { ICategoriesRepository } from '../ICategoriesRepository';
 
 export default class CategoriesRepository implements ICategoriesRepository {
     private repository: Category[];
 
-    constructor() {
+    private static INSTANCE: CategoriesRepository;
+
+    private constructor() {
         this.repository = [];
+    }
+
+    public static getInstance(): CategoriesRepository {
+        if (!CategoriesRepository.INSTANCE) {
+            CategoriesRepository.INSTANCE = new CategoriesRepository();
+        }
+        return CategoriesRepository.INSTANCE;
     }
 
     public findByName(name: string): Category {
