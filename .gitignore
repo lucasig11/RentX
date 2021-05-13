@@ -127,6 +127,7 @@ dist/
 # Temporary folders
 tmp/
 temp/
+!tmp/.gitkeep
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
