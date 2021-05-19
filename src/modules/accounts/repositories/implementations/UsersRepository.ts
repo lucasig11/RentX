@@ -1,4 +1,4 @@
-import { User } from '@modules/users/entities/User';
+import { User } from '@modules/accounts/entities/User';
 import { getRepository, Repository } from 'typeorm';
 
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
