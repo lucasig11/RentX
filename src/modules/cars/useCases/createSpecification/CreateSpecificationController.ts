@@ -1,14 +1,19 @@
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
 import CreateSpecificationUseCase from './CreateSpecificationUseCase';
 
 export default class CreateSpecificationController {
-    constructor(private createSpecification: CreateSpecificationUseCase) {}
-
-    handle(request: Request, response: Response): Response {
+    public async handle(
+        request: Request,
+        response: Response
+    ): Promise<Response> {
         const { name, description } = request.body;
 
-        this.createSpecification.execute({
+        const createSpecification = container.resolve(
+            CreateSpecificationUseCase
+        );
+        await createSpecification.execute({
             name,
             description,
         });
