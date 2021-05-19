@@ -1,6 +1,19 @@
 version: "3.7"
 
 services:
+    db_postgres:
+        image: postgres
+        container_name: db_postgres
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_USER=docker
+            - POSTGRES_PASSWORD=ignite
+            - POSTGRES_DB=rentx
+        volumes:
+            - pgdata:/data/postgres
+
     app:
         build: . # build the app image
         container_name: rentx
@@ -8,3 +21,11 @@ services:
             - 3333:3333
         volumes:
             - .:/usr/app
+        links:
+            - db_postgres
+        depends_on:
+            - db_postgres
+
+volumes:
+    pgdata:
+        driver: local
