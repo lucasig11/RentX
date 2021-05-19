@@ -5,6 +5,14 @@
         "description": "Car renting API",
         "version": "1.0.0"
     },
+    "tags": {
+        "Category": {
+            "description": "list and create categories"
+        },
+        "Specification": {
+            "description": "list and create specifications"
+        }
+    },
     "paths": {
         "/categories": {
             "post": {
@@ -17,19 +25,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    }
-                                },
-                                "example": {
-                                    "name": "testCategory",
-                                    "description": "this is an example"
-                                }
+                                "$ref": "#/definitions/Category"
                             }
                         }
                     }
@@ -57,21 +53,100 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "description": {
-                                                "type": "string"
-                                            }
-                                        }
+                                        "$ref": "#/definitions/Category"
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
+        },
+        "/categories/import": {
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Imports categories",
+                "description": "Loads categories from .csv file",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/specifications": {
+            "post": {
+                "tags": [
+                    "Specification"
+                ],
+                "summary": "Creates a new specification",
+                "description": "Creates a new specification",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Specification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "500": {
+                        "description": "Specification already exists"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Specification": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "testSpecification",
+                "description": "this is an specification"
+            }
+        },
+        "Category": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "testCategory",
+                "description": "this is an example"
             }
         }
     }
