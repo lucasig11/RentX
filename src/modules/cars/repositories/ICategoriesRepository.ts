@@ -1,4 +1,4 @@
-import Category from '../models/Category';
+import Category from '../entities/Category';
 import ICreateCategoryDTO from '../useCases/createCategory/ICreateCategoryDTO';
 
 export interface ICategoriesRepository {

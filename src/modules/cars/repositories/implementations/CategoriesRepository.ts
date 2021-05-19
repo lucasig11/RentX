@@ -1,23 +1,14 @@
 import { getRepository, Repository } from 'typeorm';
 
-import Category from '../../models/Category';
+import Category from '../../entities/Category';
 import ICreateCategoryDTO from '../../useCases/createCategory/ICreateCategoryDTO';
 import { ICategoriesRepository } from '../ICategoriesRepository';
 
 export default class CategoriesRepository implements ICategoriesRepository {
     private repository: Repository<Category>;
 
-    private static INSTANCE: CategoriesRepository;
-
-    private constructor() {
+    constructor() {
         this.repository = getRepository(Category);
-    }
-
-    public static getInstance(): CategoriesRepository {
-        if (!CategoriesRepository.INSTANCE) {
-            CategoriesRepository.INSTANCE = new CategoriesRepository();
-        }
-        return CategoriesRepository.INSTANCE;
     }
 
     public async findByName(name: string): Promise<Category> {

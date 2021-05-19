@@ -1,5 +1,4 @@
-import Category from 'modules/cars/models/Category';
-
+import Category from '../../entities/Category';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 export default class ListCategoriesUseCase {
