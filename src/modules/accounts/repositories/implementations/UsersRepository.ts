@@ -35,9 +35,7 @@ export default class UsersRepository implements IUsersRepository {
     }
 
     public async findByID(id: string): Promise<User> {
-        const user = await this.repository.findOne({
-            where: { id },
-        });
+        const user = await this.repository.findOne(id);
 
         return user;
     }
