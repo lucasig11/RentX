@@ -3,6 +3,8 @@ import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHash
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 
+import AppError from '@shared/errors/AppError';
+
 @injectable()
 export class CreateUserUseCase {
     constructor(
@@ -19,6 +21,12 @@ export class CreateUserUseCase {
         email,
         driver_license,
     }: ICreateUserDTO): Promise<void> {
+        const findUser = await this.usersRepository.findByEmail(email);
+
+        if (findUser) {
+            throw new AppError('This e-mail is already in use.');
+        }
+
         const passwordHash = await this.hashProvider.generateHash(password);
 
         await this.usersRepository.create({
