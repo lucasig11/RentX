@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import ITokenProvider from '../providers/TokenProvider/models/ITokenProvider';
+import UsersRepository from '../repositories/implementations/UsersRepository';
 
 export async function ensureAuthenticated(
     request: Request,
@@ -22,6 +23,13 @@ export async function ensureAuthenticated(
 
     const user_id = await tokenProvider.verify(token);
 
-    console.log(user_id);
+    const usersRepository = new UsersRepository();
+
+    const findUser = usersRepository.findByID(user_id);
+
+    if (!findUser) {
+        throw new AppError('Invalid JWT token', 401);
+    }
+
     next();
 }
