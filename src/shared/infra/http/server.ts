@@ -6,11 +6,11 @@ import swaggerUI from 'swagger-ui-express';
 
 import AppError from '@shared/errors/AppError';
 
-import './database';
+import '../../../database';
 import '@shared/container';
 
-import routes from './routes';
-import swaggerFile from './swagger.json';
+import routes from '../../../routes';
+import swaggerFile from '../../../swagger.json';
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use(
                 message: err.message,
             });
         }
+        // console.log(err);
         return response.status(500).json({
             status: 'error',
             message: 'Internal server error.',

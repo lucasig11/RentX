@@ -1,3 +1,4 @@
+import { ensureAuthenticated } from '@modules/accounts/middlewares/ensureAuthenticated';
 import { Router } from 'express';
 
 import CategoriesRouter from './categories.routes';
@@ -8,7 +9,7 @@ import UsersRouter from './users.routes';
 const routes = Router();
 
 routes.use('/categories', CategoriesRouter);
-routes.use('/specifications', SpecificationsRouter);
+routes.use('/specifications', ensureAuthenticated, SpecificationsRouter);
 routes.use('/users', UsersRouter);
 routes.use('/sessions', SessionsRouter);
 
