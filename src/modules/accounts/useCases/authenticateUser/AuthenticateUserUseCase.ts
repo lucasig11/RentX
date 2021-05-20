@@ -1,3 +1,4 @@
+import { User } from '@modules/accounts/entities/User';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
 import ITokenProvider from '@modules/accounts/providers/TokenProvider/models/ITokenProvider';
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
@@ -11,12 +12,7 @@ interface IRequest {
 }
 
 interface IResponse {
-    user: {
-        id: string;
-        name: string;
-        email: string;
-        isAdmin?: boolean;
-    };
+    user: User;
     token: string;
 }
 
@@ -51,6 +47,6 @@ export default class AuthenticateUserUseCase {
         return {
             user,
             token,
-        } as IResponse;
+        };
     }
 }

@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
     Column,
     CreateDateColumn,
@@ -14,6 +15,7 @@ export class User {
     name: string;
 
     @Column()
+    @Exclude()
     password: string;
 
     @Column()
