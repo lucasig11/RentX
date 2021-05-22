@@ -31,5 +31,6 @@ export async function ensureAuthenticated(
         throw new AppError('Invalid JWT token', 401);
     }
 
+    request.user = { id: user_id };
     next();
 }
