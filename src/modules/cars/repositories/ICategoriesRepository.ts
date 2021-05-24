@@ -3,6 +3,6 @@ import Category from '../entities/Category';
 
 export default interface ICategoriesRepository {
     findByName(name: string): Promise<Category>;
-    create(data: ICreateCategoryDTO): Promise<void>;
+    create(data: ICreateCategoryDTO): Promise<Category>;
     index(): Promise<Category[]>;
 }

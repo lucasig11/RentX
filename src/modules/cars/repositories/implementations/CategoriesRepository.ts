@@ -22,13 +22,15 @@ export default class CategoriesRepository implements ICategoriesRepository {
     public async create({
         name,
         description,
-    }: ICreateCategoryDTO): Promise<void> {
+    }: ICreateCategoryDTO): Promise<Category> {
         const category = this.repository.create({
             name,
             description,
         });
 
         await this.repository.save(category);
+
+        return category;
     }
 
     public async index(): Promise<Category[]> {

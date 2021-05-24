@@ -24,12 +24,14 @@ export default class SpecificationsRepository
     public async create({
         name,
         description,
-    }: ICreateSpecificationDTO): Promise<void> {
+    }: ICreateSpecificationDTO): Promise<Specification> {
         const specification = this.repository.create({
             name,
             description,
         });
 
         await this.repository.save(specification);
+
+        return specification;
     }
 }
