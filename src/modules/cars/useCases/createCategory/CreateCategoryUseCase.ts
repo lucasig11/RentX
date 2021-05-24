@@ -1,3 +1,4 @@
+import Category from '@modules/cars/entities/Category';
 import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
@@ -16,16 +17,18 @@ export default class CreateCategoryUseCase {
         private categoriesRepository: ICategoriesRepository
     ) {}
 
-    public async execute({ name, description }: IRequest): Promise<void> {
+    public async execute({ name, description }: IRequest): Promise<Category> {
         const categoryExists = await this.categoriesRepository.findByName(name);
 
         if (categoryExists) {
             throw new AppError('This category already exists');
         }
 
-        this.categoriesRepository.create({
+        const newCategory = await this.categoriesRepository.create({
             name,
             description,
         });
+
+        return newCategory;
     }
 }
