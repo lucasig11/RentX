@@ -23,7 +23,7 @@ module.exports = {
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
     collectCoverageFrom: [
-        '<rootDir>/src/modules/**/services/*.ts'
+        '<rootDir>/src/modules/**/useCases/**/*.ts'
     ],
 
     // The directory where Jest should output its coverage files
@@ -93,7 +93,7 @@ module.exports = {
     // notifyMode: "failure-change",
 
     // A preset that is used as a base for Jest's configuration
-    // preset: undefined,
+    preset: 'ts-jest',
 
     // Run tests from one or more projects
     // projects: undefined,
