@@ -1,5 +1,5 @@
 import uploadConfig from '@config/upload';
-import { ensureAuthenticated } from '@modules/accounts/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/accounts/infra/http/middlewares/ensureAuthenticated';
 import CreateUserController from '@modules/accounts/useCases/createUser/CreateUserController';
 import UpdateUserAvatarController from '@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController';
 import { Router } from 'express';

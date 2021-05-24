@@ -1,4 +1,4 @@
-import { User } from '@modules/accounts/entities/User';
+import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
 import ITokenProvider from '@modules/accounts/providers/TokenProvider/models/ITokenProvider';
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';

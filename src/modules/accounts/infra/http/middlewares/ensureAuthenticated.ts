@@ -3,8 +3,8 @@ import { container } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 
-import ITokenProvider from '../providers/TokenProvider/models/ITokenProvider';
-import UsersRepository from '../repositories/implementations/UsersRepository';
+import ITokenProvider from '../../../providers/TokenProvider/models/ITokenProvider';
+import UsersRepository from '../../typeorm/repositories/UsersRepository';
 
 export async function ensureAuthenticated(
     request: Request,

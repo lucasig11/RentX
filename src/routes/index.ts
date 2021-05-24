@@ -1,4 +1,4 @@
-import { ensureAuthenticated } from '@modules/accounts/middlewares/ensureAuthenticated';
+import { ensureAuthenticated } from '@modules/accounts/infra/http/middlewares/ensureAuthenticated';
 import { Router } from 'express';
 
 import CategoriesRouter from './categories.routes';
