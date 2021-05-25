@@ -11,9 +11,11 @@ export default class UsersRepository implements IUsersRepository {
         this.repository = getRepository(User);
     }
 
-    public async create(data: ICreateUserDTO): Promise<void> {
+    public async create(data: ICreateUserDTO): Promise<User> {
         const user = this.repository.create(data);
         await this.repository.save(user);
+
+        return user;
     }
 
     public async findByEmail(email: string): Promise<User> {
