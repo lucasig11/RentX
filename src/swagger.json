@@ -25,14 +25,21 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/definitions/Category"
+                                "$ref": "#/definitions/Category_Request"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Category_Response"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Category already exists"
@@ -109,7 +116,14 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Specification_Response"
+                                }
+                            }
+                        }
                     },
                     "500": {
                         "description": "Specification already exists"
@@ -134,7 +148,7 @@
                 "description": "this is an specification"
             }
         },
-        "Category": {
+        "Category_Request": {
             "type": "object",
             "properties": {
                 "name": {
@@ -147,6 +161,52 @@
             "example": {
                 "name": "testCategory",
                 "description": "this is an example"
+            }
+        },
+        "Category_Response": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "date"
+                }
+            },
+            "example": {
+                "id": "037203e4-3924-4d86-b1a5-5e6d293069c0",
+                "name": "testCategory",
+                "description": "this is an example",
+                "created_at": "2021-05-25T05:41:31.550Z"
+            }
+        },
+        "Specification_Response": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "date"
+                }
+            },
+            "example": {
+                "id": "037203e4-3924-4d86-b1a5-5e6d293069c0",
+                "name": "testSpecification",
+                "description": "this is an example",
+                "created_at": "2021-05-25T05:41:31.550Z"
             }
         }
     }
