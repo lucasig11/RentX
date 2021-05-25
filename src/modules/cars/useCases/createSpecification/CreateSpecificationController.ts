@@ -13,11 +13,11 @@ export default class CreateSpecificationController {
         const createSpecification = container.resolve(
             CreateSpecificationUseCase
         );
-        await createSpecification.execute({
+        const specification = await createSpecification.execute({
             name,
             description,
         });
 
-        return response.status(201).send();
+        return response.status(201).json(specification);
     }
 }
