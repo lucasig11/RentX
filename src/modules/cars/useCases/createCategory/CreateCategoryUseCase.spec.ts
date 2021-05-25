@@ -24,7 +24,7 @@ describe('Create new category', () => {
         expect(newCategory).toHaveProperty('id');
     });
 
-    it('should not be able to create two categories w/ the same name', async () => {
+    it('should not be able to create two categories with the same name', async () => {
         await createCategoryUseCase.execute({
             name: 'TestCategory',
             description: 'TestCategory',
