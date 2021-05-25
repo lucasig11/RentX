@@ -1,4 +1,5 @@
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
+import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
@@ -20,7 +21,7 @@ export class CreateUserUseCase {
         password,
         email,
         driver_license,
-    }: ICreateUserDTO): Promise<void> {
+    }: ICreateUserDTO): Promise<User> {
         const findUser = await this.usersRepository.findByEmail(email);
 
         if (findUser) {
@@ -29,11 +30,13 @@ export class CreateUserUseCase {
 
         const passwordHash = await this.hashProvider.generateHash(password);
 
-        await this.usersRepository.create({
+        const new_user = await this.usersRepository.create({
             name,
             password: passwordHash,
             email,
             driver_license,
         });
+
+        return new_user;
     }
 }
