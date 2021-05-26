@@ -1,5 +1,4 @@
 import FakeCategoriesRepository from '@modules/cars/repositories/fakes/FakeCategoriesRepository';
-
 import AppError from '@shared/errors/AppError';
 
 import CreateCategoryUseCase from './CreateCategoryUseCase';

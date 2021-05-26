@@ -1,7 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
-import ICreateCategoryDTO from '../../../dtos/ICreateCategoryDTO';
-import ICategoriesRepository from '../../../repositories/ICategoriesRepository';
+import ICreateCategoryDTO from '@modules/cars/dtos/ICreateCategoryDTO';
+import ICategoriesRepository from '@modules/cars/repositories/ICategoriesRepository';
+
 import Category from '../entities/Category';
 
 export default class CategoriesRepository implements ICategoriesRepository {

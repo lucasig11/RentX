@@ -1,5 +1,5 @@
-import { ICreateSpecificationDTO } from '../dtos/ICreateSpecificationDTO';
-import Specification from '../infra/typeorm/entities/Specification';
+import { ICreateSpecificationDTO } from '@modules/cars/dtos/ICreateSpecificationDTO';
+import Specification from '@modules/cars/infra/typeorm/entities/Specification';
 
 export default interface ISpecificationsRepository {
     create(data: ICreateSpecificationDTO): Promise<Specification>;

@@ -1,5 +1,4 @@
 import FakeSpecificationsRepository from '@modules/cars/repositories/fakes/FakeSpecificationsRepository';
-
 import AppError from '@shared/errors/AppError';
 
 import CreateSpecificationUseCase from './CreateSpecificationUseCase';

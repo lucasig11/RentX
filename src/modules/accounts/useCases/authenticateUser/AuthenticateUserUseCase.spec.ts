@@ -1,7 +1,6 @@
 import FakeHashProvider from '@modules/accounts/providers/HashProvider/fakes/FakeHashProvider';
 import FakeTokenProvider from '@modules/accounts/providers/TokenProvider/fakes/FakeTokenProvider';
 import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsersRepository';
-
 import AppError from '@shared/errors/AppError';
 
 import AuthenticateUserUseCase from './AuthenticateUserUseCase';

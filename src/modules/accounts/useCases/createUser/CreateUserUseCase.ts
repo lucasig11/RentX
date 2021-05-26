@@ -1,9 +1,9 @@
+import { inject, injectable } from 'tsyringe';
+
 import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
 import { User } from '@modules/accounts/infra/typeorm/entities/User';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
-import { inject, injectable } from 'tsyringe';
-
 import AppError from '@shared/errors/AppError';
 
 @injectable()
