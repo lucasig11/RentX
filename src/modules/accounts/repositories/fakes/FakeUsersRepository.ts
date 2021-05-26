@@ -19,14 +19,10 @@ export default class FakeUsersRepository implements IUsersRepository {
     }
 
     public async findByEmail(email: string): Promise<User> {
-        const find = this.repository.find((user) => user.email === email);
-
-        return find;
+        return this.repository.find((user) => user.email === email);
     }
 
     public async findByID(user_id: string): Promise<User> {
-        const find = this.repository.find((user) => user.id === user_id);
-
-        return find;
+        return this.repository.find((user) => user.id === user_id);
     }
 }
