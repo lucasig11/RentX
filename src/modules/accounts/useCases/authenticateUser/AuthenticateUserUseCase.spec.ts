@@ -29,7 +29,6 @@ describe('Authenticate user', () => {
             email: 'test@test.com',
             password: '1234',
             driver_license: '12345',
-            avatar: 'filepath',
         });
 
         const { user } = await authenticateUser.execute({
@@ -55,7 +54,6 @@ describe('Authenticate user', () => {
             email: 'test@test.com',
             password: '1234',
             driver_license: '12345',
-            avatar: 'filepath',
         });
 
         await expect(
