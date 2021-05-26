@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -12,13 +13,13 @@ export default class CreateUserController {
 
         const createUserUseCase = container.resolve(CreateUserUseCase);
 
-        await createUserUseCase.execute({
+        const user = await createUserUseCase.execute({
             name,
             password,
             email,
             driver_license,
         });
 
-        return response.status(201).json({ message: 'User created.' });
+        return response.status(201).json(classToClass(user));
     }
 }
