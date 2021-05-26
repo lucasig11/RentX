@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import UsersRepository from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
+import ITokenProvider from '@modules/accounts/providers/TokenProvider/models/ITokenProvider';
 import AppError from '@shared/errors/AppError';
-
-import ITokenProvider from '../../../providers/TokenProvider/models/ITokenProvider';
-import UsersRepository from '../../typeorm/repositories/UsersRepository';
 
 export async function ensureAuthenticated(
     request: Request,
