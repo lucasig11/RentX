@@ -17,6 +17,9 @@
             ],
             "@config/*": [
                 "config/*"
+            ],
+            "@utils/*": [
+                "utils/*"
             ]
         },
         "esModuleInterop": true,
