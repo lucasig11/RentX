@@ -22,13 +22,13 @@ export class User {
     email: string;
 
     @Column()
-    avatar: string;
+    avatar?: string;
 
     @Column()
     driver_license: string;
 
     @Column()
-    is_admin: boolean;
+    is_admin?: boolean;
 
     @CreateDateColumn()
     created_at: Date;
