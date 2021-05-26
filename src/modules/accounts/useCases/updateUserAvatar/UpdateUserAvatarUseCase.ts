@@ -1,6 +1,6 @@
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
+import { deleteFile } from '@utils/file';
 import { inject, injectable } from 'tsyringe';
-import { deleteFile } from 'utils/file';
 
 interface IRequest {
     user_id: string;
@@ -22,7 +22,6 @@ export default class UpdateUserAvatarUseCase {
 
         user.avatar = avatar_file;
 
-        console.log(user);
         await this.usersRepository.create(user);
     }
 }
