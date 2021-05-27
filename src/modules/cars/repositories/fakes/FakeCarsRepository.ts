@@ -12,10 +12,10 @@ export default class FakeCarsRepository implements ICarsRepository {
         const car = new Car();
 
         Object.assign(car, {
-            ...data,
-            available: true,
             id: v4(),
+            available: true,
             created_at: new Date(),
+            ...data,
         });
 
         this.repository.push(car);
@@ -27,5 +27,9 @@ export default class FakeCarsRepository implements ICarsRepository {
         return this.repository.find(
             (car) => car.license_plate === license_plate
         );
+    }
+
+    async listAvailable(): Promise<Car[]> {
+        return this.repository.filter((car) => car.available);
     }
 }

@@ -27,4 +27,11 @@ export default class CarsRepository implements ICarsRepository {
 
         return car;
     }
+
+    public async listAvailable(): Promise<Car[]> {
+        return this.repository.find({
+            where: { available: true },
+            relations: ['category'],
+        });
+    }
 }
