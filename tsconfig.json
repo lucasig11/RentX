@@ -28,5 +28,6 @@
         "resolveJsonModule": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
-    }
+    },
+    "exclude": ["./jest.setup.ts"]
 }
