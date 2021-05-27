@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import UsersRepository from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
 import ITokenProvider from '@modules/accounts/providers/TokenProvider/models/ITokenProvider';
+import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 
 export async function ensureAuthenticated(
@@ -22,7 +22,8 @@ export async function ensureAuthenticated(
 
     const user_id = await tokenProvider.verify(token);
 
-    const usersRepository = new UsersRepository();
+    const usersRepository: IUsersRepository =
+        container.resolve('UsersRepository');
 
     const findUser = usersRepository.findByID(user_id);
 
