@@ -1,20 +1,23 @@
+import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { getConnection } from 'typeorm';
 import { v4 } from 'uuid';
 
+import '@shared/container';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
+
+import createConnection from '../index';
 
 async function create() {
     const hashProvider: IHashProvider = container.resolve('HashProvider');
-    const connection = getConnection();
+    const connection = await createConnection('localhost');
 
     const id = v4();
 
-    const password = hashProvider.generateHash('admin');
+    const password = await hashProvider.generateHash('admin');
 
     await connection.query(
-        `INSERT INTO USERS(id, name, email, password, is_admin, created_at)
-            VALUES(${id}, 'admin', 'admin@rentx.com', ${password}, true, now())
+        `INSERT INTO USERS(id, name, email, password, is_admin, created_at, driver_license)
+            VALUES('${id}', 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'xxxxxxx')
         `
     );
 }
