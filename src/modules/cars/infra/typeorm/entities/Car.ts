@@ -3,11 +3,14 @@ import {
     CreateDateColumn,
     Entity,
     JoinColumn,
+    JoinTable,
+    ManyToMany,
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import Category from './Category';
+import Specification from './Specification';
 
 @Entity('cars')
 export default class Car {
@@ -41,6 +44,19 @@ export default class Car {
 
     @Column({ nullable: true })
     category_id: string;
+
+    @ManyToMany(() => Specification)
+    @JoinTable({
+        // relation table
+        name: 'specifications_car',
+
+        // relation table column that relates to current entity
+        joinColumns: [{ name: 'car_id' }],
+
+        // relation table column that relates to the many to many entity
+        inverseJoinColumns: [{ name: 'specification_id' }],
+    })
+    specification: Specification[];
 
     @CreateDateColumn()
     created_at: Date;
