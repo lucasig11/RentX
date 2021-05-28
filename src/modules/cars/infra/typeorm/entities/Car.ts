@@ -56,7 +56,7 @@ export default class Car {
         // relation table column that relates to the many to many entity
         inverseJoinColumns: [{ name: 'specification_id' }],
     })
-    specification: Specification[];
+    specifications: Specification[];
 
     @CreateDateColumn()
     created_at: Date;

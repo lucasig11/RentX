@@ -1,21 +1,18 @@
 import FakeCarsRepository from '@modules/cars/repositories/fakes/FakeCarsRepository';
 
-import CreateCarUseCase from '../createCar/CreateCarUseCase';
 import ListAvailableCarsUseCase from './ListAvailableCarsUseCase';
 
 let listAvailableCars: ListAvailableCarsUseCase;
-let createCar: CreateCarUseCase;
 let fakeCarsRepository: FakeCarsRepository;
 
 describe('List cars', () => {
     beforeEach(() => {
         fakeCarsRepository = new FakeCarsRepository();
-        createCar = new CreateCarUseCase(fakeCarsRepository);
         listAvailableCars = new ListAvailableCarsUseCase(fakeCarsRepository);
     });
 
     it('should be able to list all available vehicles', async () => {
-        const car1 = await createCar.execute({
+        const car1 = await fakeCarsRepository.create({
             name: 'Car name',
             description: 'Description',
             daily_rate: 100,
@@ -25,7 +22,7 @@ describe('List cars', () => {
             category_id: 'category',
         });
 
-        const car2 = await createCar.execute({
+        const car2 = await fakeCarsRepository.create({
             name: 'Car name',
             description: 'Description',
             daily_rate: 100,
@@ -41,7 +38,7 @@ describe('List cars', () => {
     });
 
     it('should be able to list all available vehicles with a given name', async () => {
-        const car = await createCar.execute({
+        const car = await fakeCarsRepository.create({
             name: 'Car name',
             description: 'Description',
             daily_rate: 100,
@@ -51,7 +48,7 @@ describe('List cars', () => {
             category_id: 'category',
         });
 
-        await createCar.execute({
+        await fakeCarsRepository.create({
             name: 'Other name',
             description: 'Description',
             daily_rate: 100,
@@ -69,7 +66,7 @@ describe('List cars', () => {
     });
 
     it('should be able to list all available vehicles with a given category ID', async () => {
-        const car = await createCar.execute({
+        const car = await fakeCarsRepository.create({
             name: 'Car name',
             description: 'Description',
             daily_rate: 100,
@@ -79,7 +76,7 @@ describe('List cars', () => {
             category_id: 'category',
         });
 
-        await createCar.execute({
+        await fakeCarsRepository.create({
             name: 'Other name',
             description: 'Description',
             daily_rate: 100,
@@ -97,7 +94,7 @@ describe('List cars', () => {
     });
 
     it('should be able to list all available vehicles with a given brand', async () => {
-        const car = await createCar.execute({
+        const car = await fakeCarsRepository.create({
             name: 'Car name',
             description: 'Description',
             daily_rate: 100,
@@ -107,7 +104,7 @@ describe('List cars', () => {
             category_id: 'category',
         });
 
-        await createCar.execute({
+        await fakeCarsRepository.create({
             name: 'Other name',
             description: 'Description',
             daily_rate: 100,

@@ -1,15 +1,21 @@
 import FakeCarsRepository from '@modules/cars/repositories/fakes/FakeCarsRepository';
+import FakeSpecificationsRepository from '@modules/cars/repositories/fakes/FakeSpecificationsRepository';
 import AppError from '@shared/errors/AppError';
 
 import CreateCarUseCase from './CreateCarUseCase';
 
 let createCar: CreateCarUseCase;
 let fakeCarsRepository: FakeCarsRepository;
+let fakeSpecificationsRepository: FakeSpecificationsRepository;
 
 describe('Create car', () => {
     beforeEach(() => {
         fakeCarsRepository = new FakeCarsRepository();
-        createCar = new CreateCarUseCase(fakeCarsRepository);
+        fakeSpecificationsRepository = new FakeSpecificationsRepository();
+        createCar = new CreateCarUseCase(
+            fakeCarsRepository,
+            fakeSpecificationsRepository
+        );
     });
 
     it('should be able to create a new car', async () => {

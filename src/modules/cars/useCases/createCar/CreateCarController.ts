@@ -13,6 +13,7 @@ export default class CreateCarController {
             description,
             fine_amount,
             license_plate,
+            specification_ids,
         } = request.body;
         const createCar = container.resolve(CreateCarUseCase);
 
@@ -24,6 +25,7 @@ export default class CreateCarController {
             description,
             fine_amount,
             license_plate,
+            specification_ids,
         });
 
         return response.status(201).json(car);

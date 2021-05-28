@@ -12,8 +12,26 @@ export default class CarsRepository implements ICarsRepository {
         this.repository = getRepository(Car);
     }
 
-    public async create(data: ICreateCarDTO): Promise<Car> {
-        const car = this.repository.create(data);
+    public async create({
+        name,
+        description,
+        daily_rate,
+        license_plate,
+        fine_amount,
+        brand,
+        category_id,
+        specifications,
+    }: ICreateCarDTO): Promise<Car> {
+        const car = this.repository.create({
+            name,
+            description,
+            daily_rate,
+            license_plate,
+            fine_amount,
+            brand,
+            category_id,
+            specifications,
+        });
 
         await this.repository.save(car);
 
@@ -33,7 +51,7 @@ export default class CarsRepository implements ICarsRepository {
     public async listAvailable(): Promise<Car[]> {
         return this.repository.find({
             where: { available: true },
-            relations: ['category'],
+            relations: ['category', 'specifications'],
         });
     }
 }
