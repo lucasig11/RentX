@@ -26,4 +26,10 @@ export default class FakeSpecificationsRepository
 
         return specification;
     }
+
+    public async findByIds(ids: string[]): Promise<Specification[]> {
+        return this.repository.filter((specification) =>
+            ids.includes(specification.id)
+        );
+    }
 }

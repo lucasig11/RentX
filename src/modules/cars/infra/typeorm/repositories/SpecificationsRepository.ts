@@ -35,4 +35,10 @@ export default class SpecificationsRepository
 
         return specification;
     }
+
+    public async findByIds(ids: string[]): Promise<Specification[]> {
+        const specifications = this.repository.findByIds(ids);
+
+        return specifications;
+    }
 }
