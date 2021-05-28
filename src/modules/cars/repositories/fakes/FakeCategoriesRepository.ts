@@ -1,6 +1,7 @@
+import { v4 } from 'uuid';
+
 import ICreateCategoryDTO from '@modules/cars/dtos/ICreateCategoryDTO';
 import Category from '@modules/cars/infra/typeorm/entities/Category';
-import { v4 } from 'uuid';
 
 import ICategoriesRepository from '../ICategoriesRepository';
 
