@@ -21,11 +21,13 @@ export default class CarsRepository implements ICarsRepository {
     }
 
     public async findByLicensePlate(license_plate: string): Promise<Car> {
-        const car = await this.repository.findOne({
+        return this.repository.findOne({
             where: { license_plate },
         });
+    }
 
-        return car;
+    public async findById(id: string): Promise<Car> {
+        return this.repository.findOne(id);
     }
 
     public async listAvailable(): Promise<Car[]> {
