@@ -1,61 +1,35 @@
-import csvParse from 'csv-parse';
-import fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 
+import ICSVParserProvider from '@modules/cars/providers/CSVParserProvider/models/ICSVParserProvider';
 import ICategoriesRepository from '@modules/cars/repositories/ICategoriesRepository';
-
-interface IImportCategories {
-    name: string;
-    description: string;
-}
+import AppError from '@shared/errors/AppError';
 
 @injectable()
 export default class ImportCategoryUseCase {
     constructor(
         @inject('CategoriesRepository')
-        private categoriesRepository: ICategoriesRepository
+        private categoriesRepository: ICategoriesRepository,
+        @inject('CSVParserProvider')
+        private csvParserProvider: ICSVParserProvider
     ) {}
 
-    parseCategories(file: Express.Multer.File): Promise<IImportCategories[]> {
-        return new Promise((resolve, reject) => {
-            const stream = fs.createReadStream(file.path);
-            const categories: IImportCategories[] = [];
+    async execute(file: Express.Multer.File): Promise<void> {
+        try {
+            const categories = await this.csvParserProvider.parse(file.path);
 
-            const fileParse = csvParse();
-            stream.pipe(fileParse);
+            categories.map(async ({ name, description }) => {
+                const categoryExists =
+                    await this.categoriesRepository.findByName(name);
 
-            fileParse
-                .on('data', (line) => {
-                    const [name, description] = line;
-                    categories.push({
+                if (!categoryExists) {
+                    await this.categoriesRepository.create({
                         name,
                         description,
                     });
-                })
-                .on('end', () => {
-                    fs.promises.unlink(file.path);
-                    resolve(categories);
-                })
-                .on('error', (err) => {
-                    reject(err);
-                });
-        });
-    }
-
-    async execute(file: Express.Multer.File): Promise<void> {
-        const categories = await this.parseCategories(file);
-
-        categories.map(async ({ name, description }) => {
-            const categoryExists = await this.categoriesRepository.findByName(
-                name
-            );
-
-            if (!categoryExists) {
-                await this.categoriesRepository.create({
-                    name,
-                    description,
-                });
-            }
-        });
+                }
+            });
+        } catch (err) {
+            throw new AppError(`Error parsing categories file - ${err}`);
+        }
     }
 }
