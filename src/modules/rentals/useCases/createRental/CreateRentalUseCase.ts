@@ -3,6 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import ICarsRepository from '@modules/cars/repositories/ICarsRepository';
 import Rental from '@modules/rentals/infra/typeorm/entities/Rental';
 import IRentalsRepository from '@modules/rentals/repositories/IRentalsRepository';
+import IDateProvider from '@shared/container/providers/DateProvider/models/IDateProvider';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
@@ -18,7 +19,9 @@ export default class CreateRentalUseCase {
         @inject('RentalsRepository')
         private rentalsRepository: IRentalsRepository,
         @inject('CarsRepository')
-        private carsRepository: ICarsRepository
+        private carsRepository: ICarsRepository,
+        @inject('DateProvider')
+        private dateProvider: IDateProvider
     ) {}
     public async execute({
         car_id,
@@ -45,6 +48,15 @@ export default class CreateRentalUseCase {
 
         if (carIsRented) {
             throw new AppError('This car has already been rented!');
+        }
+
+        const difference = this.dateProvider.differenceInHours(
+            expected_return_date,
+            start_date
+        );
+
+        if (difference < 24) {
+            throw new AppError('The minimum rental duration is 24 hours.');
         }
 
         const rental = await this.rentalsRepository.create({
