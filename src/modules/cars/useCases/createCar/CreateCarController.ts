@@ -15,6 +15,7 @@ export default class CreateCarController {
             license_plate,
             specification_ids,
         } = request.body;
+
         const createCar = container.resolve(CreateCarUseCase);
 
         const car = await createCar.execute({

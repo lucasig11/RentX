@@ -1,4 +1,3 @@
-import FakeCarsImagesRepository from '@modules/cars/repositories/fakes/FakeCarsImagesRepository';
 import FakeCarsRepository from '@modules/cars/repositories/fakes/FakeCarsRepository';
 import FakeSpecificationsRepository from '@modules/cars/repositories/fakes/FakeSpecificationsRepository';
 import AppError from '@shared/errors/AppError';
@@ -7,18 +6,15 @@ import CreateCarUseCase from './CreateCarUseCase';
 
 let createCar: CreateCarUseCase;
 let fakeCarsRepository: FakeCarsRepository;
-let fakeCarsImagesRepository: FakeCarsImagesRepository;
 let fakeSpecificationsRepository: FakeSpecificationsRepository;
 
 describe('Create car', () => {
     beforeEach(() => {
         fakeCarsRepository = new FakeCarsRepository();
-        fakeCarsImagesRepository = new FakeCarsImagesRepository();
         fakeSpecificationsRepository = new FakeSpecificationsRepository();
         createCar = new CreateCarUseCase(
             fakeCarsRepository,
-            fakeSpecificationsRepository,
-            fakeCarsImagesRepository
+            fakeSpecificationsRepository
         );
     });
 
