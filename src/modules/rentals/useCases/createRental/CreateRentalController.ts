@@ -13,8 +13,8 @@ export default class CreateRentalController {
         const rental = await createRental.execute({
             car_id,
             user_id: id,
-            start_date: new Date(start_date),
-            expected_return_date: new Date(expected_return_date),
+            start_date,
+            expected_return_date,
         });
 
         return response.json(rental);
