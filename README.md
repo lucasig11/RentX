@@ -49,19 +49,18 @@
 - [x] O usuário responsável pelo cadastro deve ser um usuário administrador.
 
 
-### Alugel de carro
+### Aluguel de carro
 ---
 **RF**
-- [ ] Deve ser possível cadastrar um aluguel
-
+- [x] Deve ser possível cadastrar um aluguel
 
 **RN**
 - [ ] O aluguel deve ter duração mínima de 24 horas.
-- [ ] Não deve ser possível cadastrar um novo aluguel caso
-    - [ ] já exista um aberto para o mesmo usuário
-    - [ ] já exista um aberto para o mesmo carro
+- [x] Não deve ser possível cadastrar um novo aluguel caso
+    - [x] já exista um aberto para o mesmo usuário
+    - [x] já exista um aberto para o mesmo carro
 - [ ] O usuário deve estar logado na aplicação
-- [ ] Ao realizar um aluguel, o status do carro deverá ser alterado para indisponível
+- [x] Ao realizar um aluguel, o status do carro deverá ser alterado para indisponível
 
 
 ### Devolução de carro
@@ -76,25 +75,25 @@
 - [ ] Ao realizar a devolução, deverá ser calculado o total do aluguel.
 - [ ] Caso o horário de devolução seja superior ao horário previsto de entrega, deverá ser cobrado multa proporcional aos dias de atraso.
 - [ ] Caso haja multa, deverá ser somado ao total do aluguel.
-- [ ] O usuário deve estar logado na aplicação
+- [ ] O usuário deve estar logado na aplicação.
 
 
-### Listagem de Alugueis para usuário
+### Listagem de aluguéis por usuário
 ---
 **RF**
-- [ ] Deve ser possível realizar a busca de todos os alugueis para o usuário
+- [ ] Deve ser possível realizar a busca de todos os alugueis de um usuário.
 
 **RN**
-- [ ] O usuário deve estar logado na aplicação
+- [ ] O usuário deve estar logado na aplicação.
 
 
 ### Recuperar Senha
 ---
 **RF**
-- [ ] Deve ser possível o usuário recuperar a senha informando o e-mail
-- [ ] O usuário deve receber um e-mail com o passo a passo para a recuperação da senha
-- [ ] O usuário deve conseguir inserir uma nova senha
+- [ ] Deve ser possível o usuário recuperar a senha informando o e-mail.
+- [ ] O usuário deve receber um e-mail com o passo a passo para a recuperação da senha.
+- [ ] O usuário deve conseguir inserir uma nova senha.
 
 **RN**
-- [ ] O usuário precisa informar uma nova senha
-- [ ] O link enviado para a recuperação deve expirar em 3 horas
+- [ ] O usuário precisa informar uma nova senha.
+- [ ] O link enviado para a recuperação deve expirar em 3 horas.
