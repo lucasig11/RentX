@@ -41,17 +41,20 @@ export default class CarsRepository implements ICarsRepository {
     public async findByLicensePlate(license_plate: string): Promise<Car> {
         return this.repository.findOne({
             where: { license_plate },
+            relations: ['category', 'specifications', 'images'],
         });
     }
 
     public async findById(id: string): Promise<Car> {
-        return this.repository.findOne(id);
+        return this.repository.findOne(id, {
+            relations: ['category', 'specifications', 'images'],
+        });
     }
 
     public async listAvailable(): Promise<Car[]> {
         return this.repository.find({
             where: { available: true },
-            relations: ['category', 'specifications'],
+            relations: ['category', 'specifications', 'images'],
         });
     }
 }
