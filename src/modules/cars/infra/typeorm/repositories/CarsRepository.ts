@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import ICreateCarDTO from '@modules/cars/dtos/ICreateCarDTO';
+import ISetAvailabilityDTO from '@modules/cars/dtos/ISetAvailabilityDTO';
 import ICarsRepository from '@modules/cars/repositories/ICarsRepository';
 
 import Car from '../entities/Car';
@@ -55,6 +56,16 @@ export default class CarsRepository implements ICarsRepository {
         return this.repository.find({
             where: { available: true },
             relations: ['category', 'specifications', 'images'],
+        });
+    }
+
+    public async setCarAvailability({
+        car_id,
+        availability,
+    }: ISetAvailabilityDTO): Promise<void> {
+        await this.repository.save({
+            id: car_id,
+            available: availability,
         });
     }
 }

@@ -1,6 +1,7 @@
 import { v4 } from 'uuid';
 
 import ICreateCarDTO from '@modules/cars/dtos/ICreateCarDTO';
+import ISetAvailabilityDTO from '@modules/cars/dtos/ISetAvailabilityDTO';
 import Car from '@modules/cars/infra/typeorm/entities/Car';
 
 import ICarsRepository from '../ICarsRepository';
@@ -35,5 +36,14 @@ export default class FakeCarsRepository implements ICarsRepository {
 
     public async listAvailable(): Promise<Car[]> {
         return this.repository.filter((car) => car.available);
+    }
+
+    public async setCarAvailability({
+        car_id,
+        availability,
+    }: ISetAvailabilityDTO): Promise<void> {
+        const carIndex = this.repository.findIndex((car) => car.id === car_id);
+
+        this.repository[carIndex].available = availability;
     }
 }
