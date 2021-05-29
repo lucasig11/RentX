@@ -125,9 +125,8 @@ dist/
 .vscode-test
 
 # Temporary folders
-tmp/
 temp/
+tmp/*
 !tmp/.gitkeep
 
 # End of https://www.toptal.com/developers/gitignore/api/node
-
