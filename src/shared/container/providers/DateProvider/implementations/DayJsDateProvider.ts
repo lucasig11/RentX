@@ -6,11 +6,14 @@ import IDateProvider from '../models/IDateProvider';
 dayjs.extend(utc);
 
 export default class DayJsDateProvider implements IDateProvider {
-    public toLocalUTC(date: Date): string {
+    private utc_format(date: Date): string {
         return dayjs(date).utc().local().format();
     }
 
     public differenceInHours(left_date: Date, right_date: Date): number {
-        return dayjs(left_date).diff(right_date, 'hours');
+        return dayjs(this.utc_format(left_date)).diff(
+            this.utc_format(right_date),
+            'hours'
+        );
     }
 }
