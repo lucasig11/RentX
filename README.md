@@ -55,11 +55,11 @@
 - [x] Deve ser possível cadastrar um aluguel
 
 **RN**
-- [ ] O aluguel deve ter duração mínima de 24 horas.
+- [x] O aluguel deve ter duração mínima de 24 horas.
 - [x] Não deve ser possível cadastrar um novo aluguel caso
     - [x] já exista um aberto para o mesmo usuário
     - [x] já exista um aberto para o mesmo carro
-- [ ] O usuário deve estar logado na aplicação
+- [x] O usuário deve estar logado na aplicação
 - [x] Ao realizar um aluguel, o status do carro deverá ser alterado para indisponível
 
 
