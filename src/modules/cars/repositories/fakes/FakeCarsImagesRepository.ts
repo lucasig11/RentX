@@ -8,12 +8,16 @@ import ICarsImagesRepository from '../ICarsImagesRepository';
 export default class FakeCarsImagesRepository implements ICarsImagesRepository {
     private repository: CarImage[] = [];
 
-    public async create(data: ICreateCarImageDTO): Promise<CarImage> {
+    public async create({
+        car_id,
+        filename,
+    }: ICreateCarImageDTO): Promise<CarImage> {
         const car_image = new CarImage();
 
         Object.assign(car_image, {
             id: v4(),
-            data,
+            car_id,
+            filename,
         });
 
         this.repository.push(car_image);
