@@ -28,4 +28,10 @@ export default class FakeCarsImagesRepository implements ICarsImagesRepository {
     public async findByCarId(car_id: string): Promise<CarImage[]> {
         return this.repository.filter((image) => image.car_id === car_id);
     }
+
+    public async clearCarImages(car_id: string): Promise<void> {
+        this.repository = this.repository.filter(
+            (image) => image.car_id !== car_id
+        );
+    }
 }

@@ -32,4 +32,8 @@ export default class CarsImagesRepository implements ICarsImagesRepository {
             where: { car_id },
         });
     }
+
+    public async clearCarImages(car_id: string): Promise<void> {
+        await this.repository.delete(car_id);
+    }
 }

@@ -5,4 +5,5 @@ export default interface ICarsImagesRepository {
     create(data: ICreateCarImageDTO): Promise<CarImage>;
     findById(id: string): Promise<CarImage>;
     findByCarId(car_id: string): Promise<CarImage[]>;
+    clearCarImages(car_id: string): Promise<void>;
 }
