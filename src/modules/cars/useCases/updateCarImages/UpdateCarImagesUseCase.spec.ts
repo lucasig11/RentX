@@ -77,7 +77,7 @@ describe('Update car images', () => {
         const car_images = await fakeCarsImagesRepository.findByCarId(car.id);
 
         expect(car_images.length).toBe(3);
-        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/avatar/image_1.png');
-        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/avatar/image_2.png');
+        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/cars/image_1.png');
+        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/cars/image_2.png');
     });
 });
