@@ -12,6 +12,7 @@ import ICategoriesRepository from '@modules/cars/repositories/ICategoriesReposit
 import ISpecificationsRepository from '@modules/cars/repositories/ISpecificationsRepository';
 
 import '@modules/accounts/providers';
+import '@modules/cars/providers';
 
 container.registerSingleton<ICategoriesRepository>(
     'CategoriesRepository',
