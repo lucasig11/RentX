@@ -31,10 +31,12 @@ export class CreateRentalsTable1622293938806 implements MigrationInterface {
                     },
                     {
                         name: 'return_date',
+                        isNullable: true,
                         type: 'timestamp',
                     },
                     {
                         name: 'total',
+                        isNullable: true,
                         type: 'numeric',
                     },
                     {
