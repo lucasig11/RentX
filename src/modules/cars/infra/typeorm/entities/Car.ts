@@ -9,6 +9,7 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 
+import CarImage from './CarImage';
 import Category from './Category';
 import Specification from './Specification';
 
@@ -57,6 +58,19 @@ export default class Car {
         inverseJoinColumns: [{ name: 'specification_id' }],
     })
     specifications: Specification[];
+
+    @ManyToMany(() => CarImage)
+    @JoinTable({
+        // relation table
+        name: 'cars_images',
+
+        // relation table column that relates to current entity
+        joinColumns: [{ name: 'car_id' }],
+
+        // relation table column that relates to the many to many entity
+        inverseJoinColumns: [{ name: 'id' }],
+    })
+    images: CarImage[];
 
     @CreateDateColumn()
     created_at: Date;
