@@ -42,7 +42,7 @@ describe('Create category controller', () => {
 
         const response = await request(app)
             .post('/categories/import')
-            .attach('file', './categories.csv')
+            .attach('file', './src/mock-data/categories.csv')
             .set({
                 Authorization: `Bearer ${token}`,
             });
@@ -53,7 +53,7 @@ describe('Create category controller', () => {
     it('should throw an error if the user is not authenticated', async () => {
         const response = await request(app)
             .post('/categories/import')
-            .attach('file', './categories.csv');
+            .attach('file', './src/mock-data/categories.csv');
         expect(response.status).toBe(401);
     });
 
@@ -67,7 +67,7 @@ describe('Create category controller', () => {
 
         const response = await request(app)
             .post('/categories/import')
-            .attach('file', './categories.csv')
+            .attach('file', './src/mock-data/categories.csv')
             .set({
                 Authorization: `Bearer ${token}`,
             });
