@@ -34,7 +34,7 @@ export default class CreateCarUseCase {
         fine_amount,
         brand,
         category_id,
-        specification_ids,
+        specification_ids = [],
     }: IRequest): Promise<Car> {
         const isNameplateUsed = await this.carsRepository.findByLicensePlate(
             license_plate
