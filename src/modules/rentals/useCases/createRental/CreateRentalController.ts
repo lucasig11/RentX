@@ -17,6 +17,6 @@ export default class CreateRentalController {
             expected_return_date,
         });
 
-        return response.json(rental);
+        return response.status(201).json(rental);
     }
 }
