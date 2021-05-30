@@ -56,6 +56,27 @@ describe('Create category controller', () => {
         expect(response.status).toBe(201);
     });
 
+    it('should not be able to create duplicate categories', async () => {
+        const authResponse = await request(app).post('/sessions').send({
+            email: 'admin@rentx.com',
+            password: 'admin',
+        });
+
+        const { token } = authResponse.body;
+
+        const response = await request(app)
+            .post('/categories')
+            .send({
+                name: 'Category',
+                description: 'category',
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(response.status).toBe(400);
+    });
+
     it('should throw an error if the user is not authenticated', async () => {
         const response = await request(app).post('/categories').send({
             name: 'Category',
