@@ -41,6 +41,11 @@ describe('Sessions controller', () => {
     });
 
     it('should not be able to authenticate with invalid e-mail', async () => {
+        await request(app).post('/sessions').send({
+            email: 'unexisting_user@email.com',
+            password: 'password',
+        });
+
         const response = await request(app).post('/sessions').send({
             email: 'unexisting_user@email.com',
             password: 'password',

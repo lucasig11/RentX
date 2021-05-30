@@ -82,6 +82,20 @@ describe('Create car controller', () => {
 
         const { token } = authResponse.body;
 
+        await request(app)
+            .post('/cars')
+            .send({
+                name: 'Car name',
+                description: 'Description',
+                daily_rate: 100,
+                license_plate: 'ABC-1234',
+                fine_amount: 60,
+                brand: 'Brand',
+                category_id,
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
         const response = await request(app)
             .post('/cars')
             .send({
