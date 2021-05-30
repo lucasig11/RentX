@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import dayjs from 'dayjs';
 import request from 'supertest';
 import { container } from 'tsyringe';
@@ -9,9 +8,10 @@ import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHash
 import { app } from '@shared/infra/http/app';
 import createConnection from '@shared/infra/typeorm';
 
-import '@shared/container';
-
 let connection: Connection;
+let user_id: string;
+let car_id: string;
+let token: string;
 
 describe('Create rental controller', () => {
     beforeAll(async () => {
@@ -25,24 +25,30 @@ describe('Create rental controller', () => {
         await connection.query(
             `INSERT INTO USERS(id, name, email, password, is_admin, created_at, driver_license)
             VALUES('${v4()}', 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'xxxxxxx');
+            INSERT INTO USERS(id, name, email, password, is_admin, created_at, driver_license)
+            VALUES('${v4()}', 'regular_user', 'user@email.com', '${password}', false, 'now()', 'xxxxxxx');
             `
         );
-    });
 
-    afterAll(async () => {
-        await connection.dropDatabase();
-        await connection.close();
-    });
-
-    it('should be able to create a new rental', async () => {
         const authResponse = await request(app).post('/sessions').send({
             email: 'admin@rentx.com',
             password: 'password',
         });
 
-        const { token, user } = authResponse.body;
+        token = authResponse.body.token;
+        user_id = authResponse.body.user.id;
 
         const categoryResponse = await request(app)
+            .post('/categories')
+            .send({
+                name: 'Category',
+                description: 'category',
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        await request(app)
             .post('/categories')
             .send({
                 name: 'Category',
@@ -69,21 +75,28 @@ describe('Create rental controller', () => {
                 Authorization: `Bearer ${token}`,
             });
 
-        const car_id = carResponse.body.id;
+        car_id = carResponse.body.id;
+    });
 
+    afterAll(async () => {
+        await connection.dropDatabase();
+        await connection.close();
+    });
+
+    it('should throw an error on invalid return_date', async () => {
         const rentalResponse = await request(app)
             .post('/rental')
             .send({
                 car_id,
-                user_id: user.id,
+                user_id,
                 start_date: new Date(),
-                expected_return_date: dayjs().add(1, 'day').toDate(),
+                expected_return_date: new Date(),
             })
             .set({
                 Authorization: `Bearer ${token}`,
             });
 
-        expect(rentalResponse.status).toBe(201);
+        expect(rentalResponse.status).toBe(400);
     });
 
     it('should throw an error if the user is not authenticated', async () => {
@@ -97,5 +110,77 @@ describe('Create rental controller', () => {
             });
 
         expect(response.status).toBe(401);
+    });
+
+    it('should throw an error with invalid car id', async () => {
+        const rentalResponse = await request(app)
+            .post('/rental')
+            .send({
+                car_id: v4(),
+                user_id,
+                start_date: new Date(),
+                expected_return_date: dayjs().add(1, 'day').toDate(),
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(rentalResponse.status).toBe(400);
+    });
+
+    it('should be able to create a new rental', async () => {
+        const rentalResponse = await request(app)
+            .post('/rental')
+            .send({
+                car_id,
+                user_id,
+                start_date: new Date(),
+                expected_return_date: dayjs().add(1, 'day').toDate(),
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(rentalResponse.status).toBe(201);
+    });
+
+    it('should throw an error if the user is already renting a car', async () => {
+        const rentalResponse = await request(app)
+            .post('/rental')
+            .send({
+                car_id,
+                user_id,
+                start_date: new Date(),
+                expected_return_date: dayjs().add(1, 'day').toDate(),
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(rentalResponse.status).toBe(400);
+    });
+
+    it('should throw an error if the car is already rented', async () => {
+        const authResponse = await request(app).post('/sessions').send({
+            email: 'user@email.com',
+            password: 'password',
+        });
+
+        const user_token = authResponse.body.token;
+        const { id } = authResponse.body.user;
+
+        const rentalResponse = await request(app)
+            .post('/rental')
+            .send({
+                car_id,
+                user_id: id,
+                start_date: new Date(),
+                expected_return_date: dayjs().add(1, 'day').toDate(),
+            })
+            .set({
+                Authorization: `Bearer ${user_token}`,
+            });
+
+        expect(rentalResponse.status).toBe(400);
     });
 });

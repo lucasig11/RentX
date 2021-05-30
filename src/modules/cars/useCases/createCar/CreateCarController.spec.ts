@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import request from 'supertest';
 import { container } from 'tsyringe';
 import { Connection } from 'typeorm';
@@ -7,8 +6,6 @@ import { v4 } from 'uuid';
 import IHashProvider from '@modules/accounts/providers/HashProvider/models/IHashProvider';
 import { app } from '@shared/infra/http/app';
 import createConnection from '@shared/infra/typeorm';
-
-import '@shared/container';
 
 let connection: Connection;
 let token: string;
