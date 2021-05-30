@@ -14,7 +14,7 @@ let connection: Connection;
 let token: string;
 let category_id: string;
 
-describe('Create category controller', () => {
+describe('Create car controller', () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();

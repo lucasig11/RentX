@@ -9,7 +9,7 @@ import '@shared/container';
 
 let connection: Connection;
 
-describe('List categories controller', () => {
+describe('List available cars controller', () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
