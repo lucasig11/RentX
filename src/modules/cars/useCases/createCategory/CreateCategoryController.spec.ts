@@ -18,13 +18,15 @@ describe('Create category controller', () => {
         await connection.runMigrations();
 
         const hashProvider: IHashProvider = container.resolve('HashProvider');
-        const id = v4();
 
         const password = await hashProvider.generateHash('admin');
 
         await connection.query(
             `INSERT INTO USERS(id, name, email, password, is_admin, created_at, driver_license)
-            VALUES('${id}', 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'xxxxxxx')`
+            VALUES('${v4()}', 'admin', 'admin@rentx.com', '${password}', true, 'now()', 'xxxxxxx');
+            INSERT INTO USERS(id, name, email, password, is_admin, created_at, driver_license)
+            VALUES('${v4()}', 'regular_user', 'user@email.com', '${password}', false, 'now()', 'xxxxxxx');
+            `
         );
     });
 
@@ -52,5 +54,35 @@ describe('Create category controller', () => {
             });
 
         expect(response.status).toBe(201);
+    });
+
+    it('should throw an error if the user is not authenticated', async () => {
+        const response = await request(app).post('/categories').send({
+            name: 'Category',
+            description: 'category',
+        });
+
+        expect(response.status).toBe(401);
+    });
+
+    it('should throw an error if the user is not an admin', async () => {
+        const authResponse = await request(app).post('/sessions').send({
+            email: 'user@email.com',
+            password: 'admin',
+        });
+
+        const { token } = authResponse.body;
+
+        const response = await request(app)
+            .post('/categories')
+            .send({
+                name: 'Category',
+                description: 'category',
+            })
+            .set({
+                Authorization: `Bearer ${token}`,
+            });
+
+        expect(response.status).toBe(501);
     });
 });
