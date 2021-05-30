@@ -10,7 +10,7 @@ import createConnection from '@shared/infra/typeorm';
 let connection: Connection;
 let car_id: string;
 
-describe('Create category controller', () => {
+describe('Update car images controller', () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
