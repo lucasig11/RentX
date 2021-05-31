@@ -20,6 +20,9 @@
         },
         "Authentication": {
             "description": "authenticate users"
+        },
+        "Rental": {
+            "description": "create and update rentals"
         }
     },
     "paths": {
@@ -168,7 +171,9 @@
                     }
                 ],
                 "summary": "Creates a new car",
-                "tags": ["Car"],
+                "tags": [
+                    "Car"
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -457,6 +462,60 @@
                     }
                 }
             }
+        },
+        "/rental": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Creates a new rental for the authenticated user",
+                "tags": [
+                    "Rental"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "car_id": {
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "expected_return_date": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Rental"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User or car has a pending rent or an invalid return date was provided"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -633,7 +692,7 @@
             "properties": {
                 "id": {
                     "type": "string",
-                    "format":"uuid"
+                    "format": "uuid"
                 },
                 "name": {
                     "type": "string"
@@ -687,6 +746,57 @@
                 "id": "91e957d0-8a52-4f68-8ef4-ae6fb884259c",
                 "available": true,
                 "created_at": "2021-05-30T11:46:56.674Z"
+            }
+        },
+        "Rental": {
+            "type": "object",
+            "properties": {
+                "car_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "user_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "start_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "expected_return_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "return_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "example": {
+                "car_id": "80da517c-5265-44ca-bcd5-3299312ecd15",
+                "user_id": "ac5a3c80-2f65-45af-9204-faa95bc71692",
+                "start_date": "2021-05-29T18:09:39.915Z",
+                "expected_return_date": "2021-05-30T18:09:39.915Z",
+                "return_date": null,
+                "id": "621b2068-b3ae-43f8-9ac8-29c77a128438",
+                "total": null,
+                "created_at": "2021-05-29T18:24:43.221Z",
+                "updated_at": "2021-05-29T18:24:43.221Z"
             }
         }
     },
