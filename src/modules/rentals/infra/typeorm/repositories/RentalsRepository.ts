@@ -30,6 +30,7 @@ export default class RentalsRepository implements IRentalsRepository {
     public async getCarRentals(car_id: string): Promise<IRentalResponseDTO> {
         const rentals = await this.repository.find({
             where: { car_id },
+            relations: ['user'],
         });
 
         const hasOpenedRental = rentals.some((rental) => !rental.return_date);
@@ -43,6 +44,7 @@ export default class RentalsRepository implements IRentalsRepository {
     public async getUserRentals(user_id: string): Promise<IRentalResponseDTO> {
         const rentals = await this.repository.find({
             where: { user_id },
+            relations: ['car'],
         });
 
         const hasOpenedRental = rentals.some((rental) => !rental.return_date);
