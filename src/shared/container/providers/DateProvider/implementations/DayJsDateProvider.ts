@@ -16,4 +16,8 @@ export default class DayJsDateProvider implements IDateProvider {
             'hours'
         );
     }
+
+    public now(): Date {
+        return dayjs().toDate();
+    }
 }
