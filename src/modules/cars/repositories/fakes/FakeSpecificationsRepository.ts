@@ -32,4 +32,8 @@ export default class FakeSpecificationsRepository
             ids.includes(specification.id)
         );
     }
+
+    public async list(): Promise<Specification[]> {
+        return this.repository;
+    }
 }

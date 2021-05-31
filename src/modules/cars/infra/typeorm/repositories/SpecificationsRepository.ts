@@ -41,4 +41,8 @@ export default class SpecificationsRepository
 
         return specifications;
     }
+
+    public async list(): Promise<Specification[]> {
+        return this.repository.find();
+    }
 }
