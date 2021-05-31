@@ -17,6 +17,13 @@ export default class DayJsDateProvider implements IDateProvider {
         );
     }
 
+    public differenceInDays(left_date: Date, right_date: Date): number {
+        return dayjs(this.utc_format(left_date)).diff(
+            this.utc_format(right_date),
+            'days'
+        );
+    }
+
     public now(): Date {
         return dayjs().toDate();
     }
