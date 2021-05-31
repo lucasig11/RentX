@@ -6,6 +6,8 @@
         "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --respawn --ignore-watch node_modules src/shared/infra/http/server.ts",
         "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli ",
         "test": "NODE_ENV=test jest --detectOpenHandles --runInBand",
+        "test:unit": "$npm_execpath test UseCase.spec",
+        "test:integration": "$npm_execpath test Controller.spec",
         "seed:admin": "ts-node-dev -r tsconfig-paths/register src/shared/infra/typeorm/seed/admin.ts",
         "prepare": "husky install"
     },
