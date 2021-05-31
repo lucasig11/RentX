@@ -12,6 +12,9 @@
         "Specification": {
             "description": "list and create specifications"
         },
+        "User": {
+            "description": "create, update and delete users"
+        },
         "Authentication": {
             "description": "authenticate users"
         }
@@ -61,6 +64,87 @@
                     },
                     "401": {
                         "description": "Invalid user/password combination"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "driver_license": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "E-mail already in use."
+                    }
+                }
+            }
+        },
+        "/users/avatar": {
+            "patch": {
+                "security": {
+                    "bearerAuth": []
+                },
+                "tags": ["User"],
+                "summary": "Updates user profile picture",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Avatar updated"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    },
+                    "403": {
+                        "description": "Unauthorized operation"
                     }
                 }
             }
