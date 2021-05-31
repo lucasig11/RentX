@@ -81,10 +81,10 @@
 ### Listagem de aluguéis por usuário
 ---
 **RF**
-- [ ] Deve ser possível realizar a busca de todos os aluguéis de um usuário.
+- [x] Deve ser possível realizar a busca de todos os aluguéis de um usuário.
 
 **RN**
-- [ ] O usuário deve estar logado na aplicação.
+- [x] O usuário deve estar logado na aplicação.
 
 
 ### Recuperar Senha
