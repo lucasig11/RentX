@@ -75,7 +75,9 @@
         },
         "/users": {
             "post": {
-                "tags": ["User"],
+                "tags": [
+                    "User"
+                ],
                 "summary": "Creates a new user",
                 "requestBody": {
                     "content": {
@@ -122,9 +124,13 @@
         "/users/avatar": {
             "patch": {
                 "security": [
-                    {"bearerAuth": []}
+                    {
+                        "bearerAuth": []
+                    }
                 ],
-                "tags": ["User"],
+                "tags": [
+                    "User"
+                ],
                 "summary": "Updates user profile picture",
                 "requestBody": {
                     "content": {
@@ -157,11 +163,13 @@
         "/cars": {
             "get": {
                 "summary": "Lists all available cars by brand, name or category_id",
-                "tags": [ "Car" ],
+                "tags": [
+                    "Car"
+                ],
                 "parameters": [
                     {
                         "in": "query",
-                        "name":  "brand",
+                        "name": "brand",
                         "schema": {
                             "type": "string"
                         }
@@ -189,10 +197,62 @@
                 }
             }
         },
+        "/cars/upload": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Updates car images",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "Car id",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Car not found"
+                    }
+                }
+            }
+        },
         "/categories": {
             "post": {
                 "security": [
-                    {"bearerAuth": []}
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "tags": [
                     "Category"
@@ -256,7 +316,9 @@
         "/categories/import": {
             "post": {
                 "security": [
-                    {"bearerAuth": []}
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "tags": [
                     "Category"
@@ -294,7 +356,9 @@
         "/specifications": {
             "post": {
                 "security": [
-                    {"bearerAuth": []}
+                    {
+                        "bearerAuth": []
+                    }
                 ],
                 "tags": [
                     "Specification"
