@@ -55,4 +55,8 @@ export default class FakeRentalsRepository implements IRentalsRepository {
             hasOpenedRental,
         };
     }
+
+    public async findById(id: string): Promise<Rental> {
+        return this.repository.find((rental) => rental.id === id);
+    }
 }

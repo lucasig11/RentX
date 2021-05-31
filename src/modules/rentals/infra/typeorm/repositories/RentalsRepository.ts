@@ -21,6 +21,10 @@ export default class RentalsRepository implements IRentalsRepository {
         return rental;
     }
 
+    public async findById(id: string): Promise<Rental> {
+        return this.repository.findOne(id);
+    }
+
     public async getCarRentals(car_id: string): Promise<IRentalResponseDTO> {
         const rentals = await this.repository.find({
             where: { car_id },
