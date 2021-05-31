@@ -48,16 +48,6 @@ describe('Create rental controller', () => {
                 Authorization: `Bearer ${token}`,
             });
 
-        await request(app)
-            .post('/categories')
-            .send({
-                name: 'Category',
-                description: 'category',
-            })
-            .set({
-                Authorization: `Bearer ${token}`,
-            });
-
         const category_id = categoryResponse.body.id;
 
         const carResponse = await request(app)
@@ -89,8 +79,8 @@ describe('Create rental controller', () => {
             .send({
                 car_id,
                 user_id,
-                start_date: new Date(),
-                expected_return_date: new Date(),
+                start_date: dayjs().toDate(),
+                expected_return_date: dayjs().toDate(),
             })
             .set({
                 Authorization: `Bearer ${token}`,
@@ -105,7 +95,7 @@ describe('Create rental controller', () => {
             .send({
                 car_id: 'invalid id',
                 user_id: 'invalid id',
-                start_date: new Date(),
+                start_date: dayjs().toDate(),
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             });
 
@@ -118,7 +108,7 @@ describe('Create rental controller', () => {
             .send({
                 car_id: v4(),
                 user_id,
-                start_date: new Date(),
+                start_date: dayjs().toDate(),
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
@@ -134,7 +124,7 @@ describe('Create rental controller', () => {
             .send({
                 car_id,
                 user_id,
-                start_date: new Date(),
+                start_date: dayjs().toDate(),
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
@@ -150,7 +140,7 @@ describe('Create rental controller', () => {
             .send({
                 car_id,
                 user_id,
-                start_date: new Date(),
+                start_date: dayjs().toDate(),
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
@@ -174,7 +164,7 @@ describe('Create rental controller', () => {
             .send({
                 car_id,
                 user_id: id,
-                start_date: new Date(),
+                start_date: dayjs().toDate(),
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
