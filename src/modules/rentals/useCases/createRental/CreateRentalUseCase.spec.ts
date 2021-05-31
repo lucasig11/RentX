@@ -3,14 +3,15 @@ import dayjs from 'dayjs';
 import Car from '@modules/cars/infra/typeorm/entities/Car';
 import FakeCarsRepository from '@modules/cars/repositories/fakes/FakeCarsRepository';
 import FakeRentalsRepository from '@modules/rentals/repositories/fakes/FakeRentalsRepository';
-import FakeDateProvider from '@shared/container/providers/DateProvider/fakes/FakeDateProvider';
+import DayJsDateProvider from '@shared/container/providers/DateProvider/implementations/DayJsDateProvider';
+import IDateProvider from '@shared/container/providers/DateProvider/models/IDateProvider';
 import AppError from '@shared/errors/AppError';
 
 import CreateRentalUseCase from './CreateRentalUseCase';
 
 let fakeRentalsRepository: FakeRentalsRepository;
 let fakeCarsRepository: FakeCarsRepository;
-let fakeDateProvider: FakeDateProvider;
+let dayjsDateProvider: IDateProvider;
 let createRental: CreateRentalUseCase;
 let car: Car;
 
@@ -20,11 +21,11 @@ describe('Create rental', () => {
     beforeEach(async () => {
         fakeRentalsRepository = new FakeRentalsRepository();
         fakeCarsRepository = new FakeCarsRepository();
-        fakeDateProvider = new FakeDateProvider();
+        dayjsDateProvider = new DayJsDateProvider();
         createRental = new CreateRentalUseCase(
             fakeRentalsRepository,
             fakeCarsRepository,
-            fakeDateProvider
+            dayjsDateProvider
         );
         car = await fakeCarsRepository.create({
             name: 'Car name',
