@@ -11,9 +11,60 @@
         },
         "Specification": {
             "description": "list and create specifications"
+        },
+        "Authentication": {
+            "description": "authenticate users"
         }
     },
     "paths": {
+        "/sessions": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login/authentication route",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/definitions/User"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid user/password combination"
+                    }
+                }
+            }
+        },
         "/categories": {
             "post": {
                 "tags": [
@@ -60,7 +111,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/Category"
+                                        "$ref": "#/definitions/Category_Response"
                                     }
                                 }
                             }
@@ -129,10 +180,66 @@
                         "description": "Specification already exists"
                     }
                 }
+            },
+            "get": {
+                "tags": [
+                    "Specification"
+                ],
+                "summary": "Lists all specifications",
+                "description": "Lists all the specifications in the database",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Specification_Response"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "driver_license": {
+                    "type": "string"
+                },
+                "is_admin": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
         "Specification": {
             "type": "object",
             "properties": {
