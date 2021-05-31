@@ -11,7 +11,7 @@
     },
     "husky": {
         "hooks": {
-            "prepare-commit-msg": "exec < /dev/tty && yarn cz --hook || true"
+            "prepare-commit-msg": "exec < /dev/tty && yarn cz --hook"
         }
     },
     "lint-staged": {
