@@ -59,4 +59,14 @@ export default class FakeRentalsRepository implements IRentalsRepository {
     public async findById(id: string): Promise<Rental> {
         return this.repository.find((rental) => rental.id === id);
     }
+
+    public async save(rental: Rental): Promise<Rental> {
+        const index = this.repository.findIndex(
+            (findUser) => findUser.id === rental.id
+        );
+
+        this.repository[index] = rental;
+
+        return rental;
+    }
 }

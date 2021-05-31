@@ -22,7 +22,9 @@ export default class RentalsRepository implements IRentalsRepository {
     }
 
     public async findById(id: string): Promise<Rental> {
-        return this.repository.findOne(id);
+        return this.repository.findOne(id, {
+            relations: ['user', 'car'],
+        });
     }
 
     public async getCarRentals(car_id: string): Promise<IRentalResponseDTO> {
@@ -49,5 +51,9 @@ export default class RentalsRepository implements IRentalsRepository {
             rentals,
             hasOpenedRental,
         };
+    }
+
+    public async save(rental: Rental): Promise<Rental> {
+        return this.repository.save(rental);
     }
 }
