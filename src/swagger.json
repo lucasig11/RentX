@@ -33,10 +33,12 @@
                                 "type": "object",
                                 "properties": {
                                     "email": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "format": "email"
                                     },
                                     "password": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "format": "password"
                                     }
                                 }
                             }
@@ -151,6 +153,9 @@
         },
         "/categories": {
             "post": {
+                "security": {
+                    "bearerAuth": []
+                },
                 "tags": [
                     "Category"
                 ],
@@ -176,8 +181,14 @@
                             }
                         }
                     },
-                    "500": {
+                    "400": {
                         "description": "Category already exists"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    },
+                    "403": {
+                        "description": "Unauthorized operation"
                     }
                 }
             },
@@ -206,6 +217,9 @@
         },
         "/categories/import": {
             "post": {
+                "security": {
+                    "bearerAuth": []
+                },
                 "tags": [
                     "Category"
                 ],
@@ -229,12 +243,21 @@
                 "responses": {
                     "201": {
                         "description": "Created"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    },
+                    "403": {
+                        "description": "Unauthorized operation"
                     }
                 }
             }
         },
         "/specifications": {
             "post": {
+                "security": {
+                    "bearerAuth": []
+                },
                 "tags": [
                     "Specification"
                 ],
@@ -260,8 +283,14 @@
                             }
                         }
                     },
-                    "500": {
+                    "400": {
                         "description": "Specification already exists"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    },
+                    "403": {
+                        "description": "Unauthorized operation"
                     }
                 }
             },
@@ -294,13 +323,15 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "name": {
                     "type": "string"
                 },
                 "email": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "email"
                 },
                 "avatar": {
                     "oneOf": [
@@ -322,6 +353,15 @@
                     "type": "string",
                     "format": "date-time"
                 }
+            },
+            "example": {
+                "id": "e8461311-19ea-4e31-be7d-2c5a58e8818a",
+                "name": "user",
+                "email": "user@email.com",
+                "avatar": null,
+                "driver_license": "xxxxxxx",
+                "is_admin": false,
+                "created_at": "2021-05-27T03:22:39.785Z"
             }
         },
         "Specification": {
@@ -398,6 +438,15 @@
                 "name": "testSpecification",
                 "description": "this is an example",
                 "created_at": "2021-05-25T05:41:31.550Z"
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
