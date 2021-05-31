@@ -20,6 +20,9 @@
             ],
             "@utils/*": [
                 "utils/*"
+            ],
+            "@docs/*": [
+                "docs/*"
             ]
         },
         "esModuleInterop": true,
