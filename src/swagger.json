@@ -15,6 +15,9 @@
         "User": {
             "description": "create, update and delete users"
         },
+        "Car": {
+            "description": "create, update and delete cars"
+        },
         "Authentication": {
             "description": "authenticate users"
         }
@@ -118,9 +121,9 @@
         },
         "/users/avatar": {
             "patch": {
-                "security": {
-                    "bearerAuth": []
-                },
+                "security": [
+                    {"bearerAuth": []}
+                ],
                 "tags": ["User"],
                 "summary": "Updates user profile picture",
                 "requestBody": {
@@ -129,7 +132,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "file": {
+                                    "avatar": {
                                         "type": "string",
                                         "format": "binary"
                                     }
@@ -153,9 +156,9 @@
         },
         "/categories": {
             "post": {
-                "security": {
-                    "bearerAuth": []
-                },
+                "security": [
+                    {"bearerAuth": []}
+                ],
                 "tags": [
                     "Category"
                 ],
@@ -217,9 +220,9 @@
         },
         "/categories/import": {
             "post": {
-                "security": {
-                    "bearerAuth": []
-                },
+                "security": [
+                    {"bearerAuth": []}
+                ],
                 "tags": [
                     "Category"
                 ],
@@ -255,9 +258,9 @@
         },
         "/specifications": {
             "post": {
-                "security": {
-                    "bearerAuth": []
-                },
+                "security": [
+                    {"bearerAuth": []}
+                ],
                 "tags": [
                     "Specification"
                 ],
