@@ -161,6 +161,45 @@
             }
         },
         "/cars": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Creates a new car",
+                "tags": ["Car"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Car_Request"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/Car_Response"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Car already registered"
+                    },
+                    "401": {
+                        "description": "Invalid or missing JWT token"
+                    },
+                    "403": {
+                        "description": "Unauthorized operation"
+                    }
+                }
+            },
             "get": {
                 "summary": "Lists all available cars by brand, name or category_id",
                 "tags": [
@@ -540,6 +579,114 @@
                 "name": "testSpecification",
                 "description": "this is an example",
                 "created_at": "2021-05-25T05:41:31.550Z"
+            }
+        },
+        "Car_Request": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "category_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "daily_rate": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fine_amount": {
+                    "type": "integer"
+                },
+                "license_plate": {
+                    "type": "string",
+                    "pattern": "[A-z]{3}-[0-9]{4}"
+                },
+                "specification_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                }
+            },
+            "example": {
+                "name": "Strada",
+                "brand": "Fiat",
+                "category_id": "2da9744a-61af-4451-924b-c0bc4f58efb1",
+                "daily_rate": 50,
+                "description": "Fiat Strada",
+                "fine_amount": 10,
+                "license_plate": "ABC-1234",
+                "specification_ids": [
+                    "dfa9b8c8-a7bc-41ab-819e-15e48685618a"
+                ]
+            }
+        },
+        "Car_Response": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format":"uuid"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "brand": {
+                    "type": "string"
+                },
+                "category_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "daily_rate": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fine_amount": {
+                    "type": "integer"
+                },
+                "license_plate": {
+                    "type": "string",
+                    "pattern": "[A-z]{3}-[0-9]{4}"
+                },
+                "specification_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "available": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "example": {
+                "name": "Strada",
+                "brand": "Fiat",
+                "category_id": "2da9744a-61af-4451-924b-c0bc4f58efb1",
+                "daily_rate": 50,
+                "description": "Fiat Strada",
+                "fine_amount": 10,
+                "license_plate": "ABC-1234",
+                "specification_ids": [
+                    "dfa9b8c8-a7bc-41ab-819e-15e48685618a"
+                ],
+                "id": "91e957d0-8a52-4f68-8ef4-ae6fb884259c",
+                "available": true,
+                "created_at": "2021-05-30T11:46:56.674Z"
             }
         }
     },
