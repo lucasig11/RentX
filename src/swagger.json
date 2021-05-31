@@ -76,7 +76,7 @@
         "/users": {
             "post": {
                 "tags": ["User"],
-                "summary": "Create a new user",
+                "summary": "Creates a new user",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -150,6 +150,41 @@
                     },
                     "403": {
                         "description": "Unauthorized operation"
+                    }
+                }
+            }
+        },
+        "/cars": {
+            "get": {
+                "summary": "Lists all available cars by brand, name or category_id",
+                "tags": [ "Car" ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name":  "brand",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "category_id",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
                     }
                 }
             }
