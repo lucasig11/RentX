@@ -1,23 +1,31 @@
 import FakeHashProvider from '@modules/accounts/providers/HashProvider/fakes/FakeHashProvider';
 import FakeTokenProvider from '@modules/accounts/providers/TokenProvider/fakes/FakeTokenProvider';
 import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsersRepository';
+import FakeUserTokensRepository from '@modules/accounts/repositories/fakes/FakeUserTokensRepository';
+import DayJsDateProvider from '@shared/container/providers/DateProvider/implementations/DayJsDateProvider';
 import AppError from '@shared/errors/AppError';
 
 import AuthenticateUserUseCase from './AuthenticateUserUseCase';
 
 let authenticateUser: AuthenticateUserUseCase;
 let fakeUsersRepository: FakeUsersRepository;
+let fakeUserTokensRepository: FakeUserTokensRepository;
 let fakeHashProvider: FakeHashProvider;
 let fakeTokenProvider: FakeTokenProvider;
+let dayjsDateProvider: DayJsDateProvider;
 
 describe('Authenticate user', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
+        fakeUserTokensRepository = new FakeUserTokensRepository();
         fakeHashProvider = new FakeHashProvider();
         fakeTokenProvider = new FakeTokenProvider();
+        dayjsDateProvider = new DayJsDateProvider();
         authenticateUser = new AuthenticateUserUseCase(
             fakeUsersRepository,
+            fakeUserTokensRepository,
             fakeHashProvider,
+            dayjsDateProvider,
             fakeTokenProvider
         );
     });
