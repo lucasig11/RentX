@@ -1,6 +1,5 @@
 import { sign, verify } from 'jsonwebtoken';
 
-import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
 import ITokenProvider from '../models/ITokenProvider';
@@ -11,15 +10,15 @@ interface IJWTToken {
     sub: string;
 }
 
+interface IOptions {
+    secret: string;
+    expiresIn: string;
+    payload?: string;
+}
+
 export default class JWTTokenProvider implements ITokenProvider {
-    private config: typeof authConfig.jwt;
-
-    constructor() {
-        this.config = authConfig.jwt;
-    }
-
-    async verify(token: string): Promise<string> {
-        const { secret } = this.config;
+    public async verify(token: string, options: IOptions): Promise<string> {
+        const { secret } = options;
 
         try {
             const { sub } = verify(token, secret) as IJWTToken;
@@ -29,9 +28,9 @@ export default class JWTTokenProvider implements ITokenProvider {
         }
     }
 
-    generate(user_id: string): string {
-        const { secret, expiresIn } = this.config;
-        const token = sign({}, secret, {
+    public generate(user_id: string, options: IOptions): string {
+        const { secret, expiresIn, payload } = options;
+        const token = sign({ payload }, secret, {
             subject: user_id,
             expiresIn,
         });

@@ -1,4 +1,9 @@
+interface IOptions {
+    secret: string;
+    expiresIn: string;
+    payload?: string;
+}
 export default interface ITokenProvider {
-    generate(user_id: string): string;
-    verify(token: string): Promise<string>;
+    generate(user_id: string, options: IOptions): string;
+    verify(token: string, options: IOptions): Promise<string>;
 }
