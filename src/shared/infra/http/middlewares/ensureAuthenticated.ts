@@ -17,14 +17,14 @@ export async function ensureAuthenticated(
         throw new AppError('Missing JWT token', 401);
     }
 
-    const tokenProvider: ITokenProvider = container.resolve('TokenProvider');
+    const tokenProvider = container.resolve<ITokenProvider>('TokenProvider');
 
     const [, token] = authHeader.split(' ');
 
     const user_id = await tokenProvider.verify(token, jwt);
 
-    const usersRepository: IUsersRepository =
-        container.resolve('UsersRepository');
+    const usersRepository =
+        container.resolve<IUsersRepository>('UsersRepository');
 
     const findUser = usersRepository.findByID(user_id);
 
