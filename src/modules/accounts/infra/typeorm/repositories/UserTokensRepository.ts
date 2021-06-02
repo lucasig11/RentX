@@ -27,12 +27,12 @@ export default class UserTokensRepository implements IUserTokensRepository {
     }
 
     public async findUserTokens(user_id: string): Promise<UserToken[]> {
-        return this.repository.find({ where: user_id });
+        return this.repository.find({ where: { user_id } });
     }
 
     public async findByToken(refresh_token: string): Promise<UserToken> {
         return this.repository.findOne({
-            where: refresh_token,
+            where: { refresh_token },
             relations: ['user'],
         });
     }
