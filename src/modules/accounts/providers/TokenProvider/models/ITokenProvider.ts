@@ -1,6 +1,6 @@
 interface IOptions {
     secret: string;
-    expiresIn: string;
+    expiresIn?: string;
     payload?: string;
 }
 export default interface ITokenProvider {
