@@ -21,10 +21,23 @@ export default class FakeUserTokensRepository implements IUserTokensRepository {
             refresh_token,
             expiration_date,
             created_at: new Date(),
+            user: {
+                email: 'fake@mail.com',
+            },
         });
 
         this.repository.push(user_token);
 
         return user_token;
+    }
+
+    public async findUserTokens(user_id: string): Promise<UserToken[]> {
+        return this.repository.filter((token) => token.user_id === user_id);
+    }
+
+    public async findByToken(refresh_token: string): Promise<UserToken> {
+        return this.repository.find(
+            (userToken) => userToken.refresh_token === refresh_token
+        );
     }
 }
