@@ -12,6 +12,10 @@ export default class UserTokensRepository implements IUserTokensRepository {
         this.repository = getRepository(UserToken);
     }
 
+    public async delete(token_id: string): Promise<void> {
+        await this.repository.delete(token_id);
+    }
+
     public async create({
         user_id,
         expiration_date,

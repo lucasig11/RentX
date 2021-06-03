@@ -36,6 +36,8 @@ export default class RefreshTokenUseCase {
             throw new AppError('Refresh token error! Invalid token.');
         }
 
+        await this.userTokensRepository.delete(find_token.id);
+
         const refresh_token = this.tokenProvider.generate(user_id, {
             secret,
             expiresIn,

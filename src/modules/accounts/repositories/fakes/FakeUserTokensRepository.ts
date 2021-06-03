@@ -40,4 +40,10 @@ export default class FakeUserTokensRepository implements IUserTokensRepository {
             (userToken) => userToken.refresh_token === refresh_token
         );
     }
+
+    public async delete(token_id: string): Promise<void> {
+        this.repository = this.repository.filter(
+            (token) => token.id !== token_id
+        );
+    }
 }
