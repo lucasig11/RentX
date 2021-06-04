@@ -7,7 +7,7 @@ import IMailProvider from './MailProvider/models/IMailProvider';
 
 container.registerSingleton<IDateProvider>('DateProvider', DayJsDateProvider);
 
-container.registerSingleton<IMailProvider>(
+container.registerInstance<IMailProvider>(
     'MailProvider',
-    EtherealMailProvider
+    new EtherealMailProvider()
 );
