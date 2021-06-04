@@ -1,3 +1,5 @@
+import fs from 'fs';
+import handlebars from 'handlebars';
 import nodemailer, { Transporter } from 'nodemailer';
 
 import ISendMailDTO from '../dtos/ISendMailDTO';
@@ -23,13 +25,25 @@ export default class EtherealMailProvider implements IMailProvider {
             .catch((err) => console.error(err));
     }
 
-    public async sendMail({ to, subject, body }: ISendMailDTO): Promise<void> {
+    public async sendMail({
+        to,
+        subject,
+        templatePath,
+        variables,
+    }: ISendMailDTO): Promise<void> {
+        const templateFileContent = fs
+            .readFileSync(templatePath)
+            .toString('utf-8');
+
+        const templateParse = handlebars.compile(templateFileContent);
+
+        const templateHTML = templateParse(variables);
+
         const message = await this.client.sendMail({
             to,
             from: 'Rentx <noreply@rentx.com.br>',
             subject,
-            text: body,
-            html: body,
+            html: templateHTML,
         });
 
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));

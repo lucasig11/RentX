@@ -1,3 +1,4 @@
+import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import { v4 } from 'uuid';
 
@@ -32,8 +33,15 @@ export default class SendForgotPasswordMailUseCase {
         }
 
         const token = v4();
-
         const expiration_date = this.dateProvider.addHours(3);
+
+        const templatePath = path.resolve(
+            __dirname,
+            '..',
+            '..',
+            'templates',
+            'forgotPasswordMail.hbs'
+        );
 
         await this.userTokensRepository.create({
             refresh_token: token,
@@ -44,7 +52,11 @@ export default class SendForgotPasswordMailUseCase {
         await this.mailProvider.sendMail({
             to: email,
             subject: 'Recuperação de senha',
-            body: token,
+            variables: {
+                name: user.name,
+                link: `${process.env.API_URL}/password/reset?token=${token}`,
+            },
+            templatePath,
         });
     }
 }
