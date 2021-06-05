@@ -3,5 +3,6 @@ export default interface IDateProvider {
     differenceInDays(left_date: Date, right_date: Date): number;
     addDays(days: number): Date;
     addHours(hours: number): Date;
+    isBefore(left_date: Date, right_date: Date): boolean;
     now(): Date;
 }

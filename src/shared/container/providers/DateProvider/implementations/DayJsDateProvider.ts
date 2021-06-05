@@ -35,4 +35,8 @@ export default class DayJsDateProvider implements IDateProvider {
     public addHours(hours: number): Date {
         return dayjs().add(hours, 'hours').toDate();
     }
+
+    public isBefore(left_date: Date, right_date: Date): boolean {
+        return dayjs(left_date).isBefore(right_date);
+    }
 }
