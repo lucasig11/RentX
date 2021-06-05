@@ -8,7 +8,7 @@ import { app } from '@shared/infra/http/app';
 import createConnection from '@shared/infra/typeorm';
 
 let connection: Connection;
-let token: string;
+let refresh_token: string;
 let category_id: string;
 
 describe('Create car controller', () => {
@@ -40,7 +40,7 @@ describe('Create car controller', () => {
             password: 'admin',
         });
 
-        token = authResponse.body.token;
+        refresh_token = authResponse.body.refresh_token;
 
         const categoryResponse = await request(app)
             .post('/categories')
@@ -49,7 +49,7 @@ describe('Create car controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         category_id = categoryResponse.body.id;
@@ -68,7 +68,7 @@ describe('Create car controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         expect(response.status).toBe(201);
@@ -80,7 +80,7 @@ describe('Create car controller', () => {
             password: 'admin',
         });
 
-        const { token } = authResponse.body;
+        const { refresh_token } = authResponse.body;
 
         const response = await request(app)
             .post('/cars')
@@ -94,7 +94,7 @@ describe('Create car controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         expect(response.status).toBe(400);
@@ -120,7 +120,7 @@ describe('Create car controller', () => {
             password: 'admin',
         });
 
-        const { token } = authResponse.body;
+        const { refresh_token } = authResponse.body;
 
         const response = await request(app)
             .post('/cars')
@@ -134,7 +134,7 @@ describe('Create car controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         expect(response.status).toBe(403);

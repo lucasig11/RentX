@@ -9,7 +9,7 @@ import { app } from '@shared/infra/http/app';
 import createConnection from '@shared/infra/typeorm';
 
 let connection: Connection;
-let token: string;
+let refresh_token: string;
 
 describe('List user rentals controller', () => {
     beforeAll(async () => {
@@ -33,7 +33,7 @@ describe('List user rentals controller', () => {
             password: 'password',
         });
 
-        token = authResponse.body.token;
+        refresh_token = authResponse.body.refresh_token;
         const user_id = authResponse.body.user.id;
 
         const categoryResponse = await request(app)
@@ -43,7 +43,7 @@ describe('List user rentals controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         const category_id = categoryResponse.body.id;
@@ -60,7 +60,7 @@ describe('List user rentals controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         const car_id = carResponse.body.id;
@@ -74,7 +74,7 @@ describe('List user rentals controller', () => {
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
     });
 
@@ -93,7 +93,7 @@ describe('List user rentals controller', () => {
         const rentalResponse = await request(app)
             .get('/rental')
             .set({
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${refresh_token}`,
             });
 
         expect(rentalResponse.status).toBe(200);
