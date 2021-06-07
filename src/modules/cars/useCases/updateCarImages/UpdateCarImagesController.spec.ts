@@ -32,7 +32,7 @@ describe('Update car images controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const categoryResponse = await request(app)
             .post('/categories')
@@ -41,7 +41,7 @@ describe('Update car images controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         await request(app)
@@ -51,7 +51,7 @@ describe('Update car images controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         const category_id = categoryResponse.body.id;
@@ -68,7 +68,7 @@ describe('Update car images controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         await request(app)
@@ -83,7 +83,7 @@ describe('Update car images controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         car_id = carResponse.body.id;
@@ -100,7 +100,7 @@ describe('Update car images controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/cars/upload')
@@ -109,7 +109,7 @@ describe('Update car images controller', () => {
             })
             .attach('images', './src/mock-data/car.png')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(200);
@@ -121,7 +121,7 @@ describe('Update car images controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/cars/upload')
@@ -130,7 +130,7 @@ describe('Update car images controller', () => {
             })
             .attach('images', './src/mock-data/car.png')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(404);
@@ -152,7 +152,7 @@ describe('Update car images controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/cars/upload')
@@ -161,7 +161,7 @@ describe('Update car images controller', () => {
             })
             .attach('images', './src/mock-data/car.png')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(403);

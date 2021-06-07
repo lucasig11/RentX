@@ -38,20 +38,20 @@ describe('Update car images controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         await request(app)
             .patch('/users/avatar')
             .attach('avatar', './src/mock-data/car.png')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         const response = await request(app)
             .patch('/users/avatar')
             .attach('avatar', './src/mock-data/car.png')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(204);

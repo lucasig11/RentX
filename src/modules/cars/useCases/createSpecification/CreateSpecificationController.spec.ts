@@ -38,7 +38,7 @@ describe('Create specification controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/specifications')
@@ -47,7 +47,7 @@ describe('Create specification controller', () => {
                 description: 'specification',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(201);
@@ -59,7 +59,7 @@ describe('Create specification controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/specifications')
@@ -68,7 +68,7 @@ describe('Create specification controller', () => {
                 description: 'specification',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(400);
@@ -89,7 +89,7 @@ describe('Create specification controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/specifications')
@@ -98,7 +98,7 @@ describe('Create specification controller', () => {
                 description: 'specification',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(403);

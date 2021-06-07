@@ -38,13 +38,13 @@ describe('Import category controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/categories/import')
             .attach('file', './src/mock-data/categories.csv')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(201);
@@ -63,13 +63,13 @@ describe('Import category controller', () => {
             password: 'admin',
         });
 
-        const { refresh_token } = authResponse.body;
+        const { token } = authResponse.body;
 
         const response = await request(app)
             .post('/categories/import')
             .attach('file', './src/mock-data/categories.csv')
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(response.status).toBe(403);

@@ -12,7 +12,7 @@ import createConnection from '@shared/infra/typeorm';
 let connection: Connection;
 let user_id: string;
 let car_id: string;
-let refresh_token: string;
+let token: string;
 let rental: Rental;
 
 describe('Discharge rental controller', () => {
@@ -37,7 +37,7 @@ describe('Discharge rental controller', () => {
             password: 'password',
         });
 
-        refresh_token = authResponse.body.refresh_token;
+        token = authResponse.body.token;
         user_id = authResponse.body.user.id;
 
         const categoryResponse = await request(app)
@@ -47,7 +47,7 @@ describe('Discharge rental controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         const category_id = categoryResponse.body.id;
@@ -64,7 +64,7 @@ describe('Discharge rental controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         car_id = carResponse.body.id;
@@ -78,7 +78,7 @@ describe('Discharge rental controller', () => {
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         rental = rentalResponse.body;
@@ -104,7 +104,7 @@ describe('Discharge rental controller', () => {
                 id: rental.id,
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(200);
@@ -117,7 +117,7 @@ describe('Discharge rental controller', () => {
                 id: v4(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(404);
@@ -129,7 +129,7 @@ describe('Discharge rental controller', () => {
             password: 'password',
         });
 
-        const other_user_token = authResponse.body.refresh_token;
+        const other_user_token = authResponse.body.token;
 
         const rentalResponse = await request(app)
             .post('/rental/discharge')

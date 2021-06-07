@@ -11,7 +11,7 @@ import createConnection from '@shared/infra/typeorm';
 let connection: Connection;
 let user_id: string;
 let car_id: string;
-let refresh_token: string;
+let token: string;
 
 describe('Create rental controller', () => {
     beforeAll(async () => {
@@ -35,7 +35,7 @@ describe('Create rental controller', () => {
             password: 'password',
         });
 
-        refresh_token = authResponse.body.refresh_token;
+        token = authResponse.body.token;
         user_id = authResponse.body.user.id;
 
         const categoryResponse = await request(app)
@@ -45,7 +45,7 @@ describe('Create rental controller', () => {
                 description: 'category',
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         const category_id = categoryResponse.body.id;
@@ -62,7 +62,7 @@ describe('Create rental controller', () => {
                 category_id,
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         car_id = carResponse.body.id;
@@ -83,7 +83,7 @@ describe('Create rental controller', () => {
                 expected_return_date: dayjs().toDate(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(400);
@@ -112,7 +112,7 @@ describe('Create rental controller', () => {
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(400);
@@ -128,7 +128,7 @@ describe('Create rental controller', () => {
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(201);
@@ -144,7 +144,7 @@ describe('Create rental controller', () => {
                 expected_return_date: dayjs().add(1, 'day').toDate(),
             })
             .set({
-                Authorization: `Bearer ${refresh_token}`,
+                Authorization: `Bearer ${token}`,
             });
 
         expect(rentalResponse.status).toBe(400);
@@ -156,7 +156,7 @@ describe('Create rental controller', () => {
             password: 'password',
         });
 
-        const user_token = authResponse.body.refresh_token;
+        const user_token = authResponse.body.token;
         const { id } = authResponse.body.user;
 
         const rentalResponse = await request(app)
