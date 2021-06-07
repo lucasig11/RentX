@@ -9,7 +9,7 @@ import { ensureAdmin } from '@shared/infra/http/middlewares/ensureAdmin';
 import { ensureAuthenticated } from '@shared/infra/http/middlewares/ensureAuthenticated';
 
 const carsRouter = Router();
-const uploadImages = multer(uploadConfig.upload('./tmp/cars'));
+const uploadImages = multer(uploadConfig.multer);
 
 const createCarController = new CreateCarController();
 const updateCarImageController = new UpdateCarImagesController();
