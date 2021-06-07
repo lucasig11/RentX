@@ -1,19 +1,20 @@
 import FakeUsersRepository from '@modules/accounts/repositories/fakes/FakeUsersRepository';
-import * as deleteFile from '@utils/file';
+import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 
 import UpdateUserAvatarUseCase from './UpdateUserAvatarUseCase';
 
 let updateUserAvatar: UpdateUserAvatarUseCase;
+let fakeStorageProvider: FakeStorageProvider;
 let fakeUsersRepository: FakeUsersRepository;
-
-jest.mock('@utils/file', () => ({
-    deleteFile: jest.fn(),
-}));
 
 describe('Update avatar', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
-        updateUserAvatar = new UpdateUserAvatarUseCase(fakeUsersRepository);
+        fakeStorageProvider = new FakeStorageProvider();
+        updateUserAvatar = new UpdateUserAvatarUseCase(
+            fakeUsersRepository,
+            fakeStorageProvider
+        );
     });
 
     it("should be able to update the user's avatar", async () => {
@@ -35,7 +36,7 @@ describe('Update avatar', () => {
     });
 
     it('should delete previous avatar if user had one', async () => {
-        const deleteFileSpy = jest.spyOn(deleteFile, 'deleteFile');
+        const deleteFileSpy = jest.spyOn(fakeStorageProvider, 'deleteFile');
 
         const user = await fakeUsersRepository.create({
             name: 'TestUser',
@@ -54,7 +55,7 @@ describe('Update avatar', () => {
             avatar_file: 'avatar2.jpg',
         });
 
-        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/avatar/avatar.jpg');
+        expect(deleteFileSpy).toHaveBeenCalledWith('avatar.jpg', 'avatar');
         expect(user.avatar).toBe('avatar2.jpg');
     });
 });
