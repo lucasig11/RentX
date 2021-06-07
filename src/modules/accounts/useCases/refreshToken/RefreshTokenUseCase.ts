@@ -1,12 +1,15 @@
 import { inject, injectable } from 'tsyringe';
 
 import authConfig from '@config/auth';
-import UserToken from '@modules/accounts/infra/typeorm/entities/UserToken';
 import ITokenProvider from '@modules/accounts/providers/TokenProvider/models/ITokenProvider';
 import IUserTokensRepository from '@modules/accounts/repositories/IUserTokensRepository';
 import IDateProvider from '@shared/container/providers/DateProvider/models/IDateProvider';
 import AppError from '@shared/errors/AppError';
 
+interface IResponse {
+    token: string;
+    refresh_token: string;
+}
 @injectable()
 export default class RefreshTokenUseCase {
     constructor(
@@ -17,8 +20,11 @@ export default class RefreshTokenUseCase {
         @inject('DateProvider')
         private dateProvider: IDateProvider
     ) {}
-    public async execute(token: string): Promise<UserToken> {
-        const { secret, expiresIn } = authConfig.refresh_token;
+    public async execute(token: string): Promise<IResponse> {
+        const {
+            jwt,
+            refresh_token: { secret, expiresIn },
+        } = authConfig;
 
         const token_user_id = await this.tokenProvider.verify(token, {
             secret,
@@ -48,12 +54,17 @@ export default class RefreshTokenUseCase {
             Number(expiresIn.match(/[0-9]*/))
         );
 
-        const new_token = await this.userTokensRepository.create({
+        await this.userTokensRepository.create({
             user_id,
             refresh_token,
             expiration_date,
         });
 
-        return new_token;
+        const new_token = this.tokenProvider.generate(user_id, jwt);
+
+        return {
+            token: new_token,
+            refresh_token,
+        };
     }
 }
