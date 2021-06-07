@@ -2,8 +2,8 @@ import { inject, injectable } from 'tsyringe';
 
 import ICarsImagesRepository from '@modules/cars/repositories/ICarsImagesRepository';
 import ICarsRepository from '@modules/cars/repositories/ICarsRepository';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import AppError from '@shared/errors/AppError';
-import { deleteFile } from '@utils/file';
 
 interface IRequest {
     car_id: string;
@@ -16,7 +16,9 @@ export default class UpdateCarImagesUseCase {
         @inject('CarsImagesRepository')
         private carsImagesRepository: ICarsImagesRepository,
         @inject('CarsRepository')
-        private carsRepository: ICarsRepository
+        private carsRepository: ICarsRepository,
+        @inject('StorageProvider')
+        private storageProvider: IStorageProvider
     ) {}
 
     public async execute({ car_id, filenames }: IRequest): Promise<void> {
@@ -29,7 +31,7 @@ export default class UpdateCarImagesUseCase {
         const car_images = await this.carsImagesRepository.findByCarId(car_id);
 
         car_images.forEach(async (image) => {
-            await deleteFile(`./tmp/cars/${image.filename}`);
+            await this.storageProvider.deleteFile(image.filename, 'cars');
         });
 
         await this.carsImagesRepository.clearCarImages(car_id);
@@ -39,6 +41,8 @@ export default class UpdateCarImagesUseCase {
                 car_id,
                 filename,
             });
+
+            await this.storageProvider.saveFile(filename, 'cars');
         });
     }
 }

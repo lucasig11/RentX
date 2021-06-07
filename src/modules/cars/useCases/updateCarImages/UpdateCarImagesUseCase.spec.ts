@@ -1,27 +1,26 @@
 import Car from '@modules/cars/infra/typeorm/entities/Car';
 import FakeCarsImagesRepository from '@modules/cars/repositories/fakes/FakeCarsImagesRepository';
 import FakeCarsRepository from '@modules/cars/repositories/fakes/FakeCarsRepository';
+import FakeStorageProvider from '@shared/container/providers/StorageProvider/fakes/FakeStorageProvider';
 import AppError from '@shared/errors/AppError';
-import * as deleteFile from '@utils/file';
 
 import UpdateCarImagesUseCase from './UpdateCarImagesUseCase';
 
 let updateImages: UpdateCarImagesUseCase;
+let fakeStorageProvider: FakeStorageProvider;
 let fakeCarsRepository: FakeCarsRepository;
 let fakeCarsImagesRepository: FakeCarsImagesRepository;
 let car: Car;
-
-jest.mock('@utils/file', () => ({
-    deleteFile: jest.fn(),
-}));
 
 describe('Update car images', () => {
     beforeEach(async () => {
         fakeCarsRepository = new FakeCarsRepository();
         fakeCarsImagesRepository = new FakeCarsImagesRepository();
+        fakeStorageProvider = new FakeStorageProvider();
         updateImages = new UpdateCarImagesUseCase(
             fakeCarsImagesRepository,
-            fakeCarsRepository
+            fakeCarsRepository,
+            fakeStorageProvider
         );
         car = await fakeCarsRepository.create({
             name: 'Car name',
@@ -58,7 +57,7 @@ describe('Update car images', () => {
     });
 
     it('should clear previous images before adding new ones', async () => {
-        const deleteFileSpy = jest.spyOn(deleteFile, 'deleteFile');
+        const deleteFileSpy = jest.spyOn(fakeStorageProvider, 'deleteFile');
 
         const filenames = ['image_1.png', 'image_2.png'];
 
@@ -77,7 +76,7 @@ describe('Update car images', () => {
         const car_images = await fakeCarsImagesRepository.findByCarId(car.id);
 
         expect(car_images.length).toBe(3);
-        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/cars/image_1.png');
-        expect(deleteFileSpy).toHaveBeenCalledWith('./tmp/cars/image_2.png');
+        expect(deleteFileSpy).toHaveBeenCalledWith('image_1.png', 'cars');
+        expect(deleteFileSpy).toHaveBeenCalledWith('image_2.png', 'cars');
     });
 });
