@@ -2,6 +2,7 @@ import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import { v4 } from 'uuid';
 
+import mail from '@config/mail';
 import IUsersRepository from '@modules/accounts/repositories/IUsersRepository';
 import IUserTokensRepository from '@modules/accounts/repositories/IUserTokensRepository';
 import IDateProvider from '@shared/container/providers/DateProvider/models/IDateProvider';
@@ -50,7 +51,14 @@ export default class SendForgotPasswordMailUseCase {
         });
 
         await this.mailProvider.sendMail({
-            to: email,
+            to: {
+                name: user.name,
+                address: user.email,
+            },
+            from: {
+                name: mail.defaults.from.email,
+                address: mail.defaults.from.email,
+            },
             subject: 'Recuperação de senha',
             variables: {
                 name: user.name,

@@ -1,5 +1,12 @@
 export default interface ISendMailDTO {
-    to: string;
+    to: {
+        name: string;
+        address: string;
+    };
+    from: {
+        name: string;
+        address: string;
+    };
     subject: string;
     variables: {
         [key: string]: string;
