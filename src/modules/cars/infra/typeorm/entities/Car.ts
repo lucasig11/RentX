@@ -1,3 +1,4 @@
+import { Exclude, Expose } from 'class-transformer';
 import {
     Column,
     CreateDateColumn,
@@ -8,6 +9,9 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import awsConfig from '@config/aws';
+import uploadConfig from '@config/upload';
 
 import CarImage from './CarImage';
 import Category from './Category';
@@ -70,7 +74,25 @@ export default class Car {
         // relation table column that relates to the many to many entity
         inverseJoinColumns: [{ name: 'id' }],
     })
+    @Exclude()
     images: CarImage[];
+
+    @Expose({ name: 'images_urls' })
+    getAvatarUrl(): string[] | null {
+        if (!this.images) {
+            return null;
+        }
+        return this.images.map((image) => {
+            switch (uploadConfig.driver) {
+                case 'disk':
+                    return `${process.env.API_URL}/files/cars/${image.filename}`;
+                case 's3':
+                    return `https://${awsConfig.s3.bucket}.s3.amazonaws.com/${image.filename}`;
+                default:
+                    return null;
+            }
+        });
+    }
 
     @CreateDateColumn()
     created_at: Date;

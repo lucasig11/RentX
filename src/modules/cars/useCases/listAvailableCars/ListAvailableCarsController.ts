@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -17,6 +18,6 @@ export default class ListCarController {
             category_id: category_id as string,
         });
 
-        return response.json(cars);
+        return response.json(classToClass(cars));
     }
 }
