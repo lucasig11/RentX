@@ -2,20 +2,25 @@ import 'reflect-metadata';
 import 'express-async-errors';
 import 'dotenv/config';
 
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import path from 'path';
 import swaggerUI from 'swagger-ui-express';
 
 import swaggerFile from '@docs/swagger.json';
 import AppError from '@shared/errors/AppError';
 
 import '@shared/container';
+
 import createConnection from '../typeorm';
+import { errorFallback } from './middlewares/errorFallback';
 import routes from './routes';
 
 createConnection();
+
 const app = express();
 
 app.use(express.json());
+
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 app.use(routes);
 app.use(
@@ -34,5 +39,9 @@ app.use(
         });
     }
 );
+
+app.use(routes);
+
+app.use(errorFallback);
 
 export { app };
