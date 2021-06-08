@@ -9,7 +9,7 @@ import createConnection from '../index';
 
 async function create() {
     const hashProvider: IHashProvider = container.resolve('HashProvider');
-    const connection = await createConnection('localhost');
+    const connection = await createConnection();
 
     const id = v4();
 
