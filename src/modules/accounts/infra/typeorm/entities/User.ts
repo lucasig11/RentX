@@ -48,7 +48,7 @@ export class User {
             case 'disk':
                 return `${process.env.API_URL}/files/avatar/${this.avatar}`;
             case 's3':
-                return `https://${awsConfig.s3.bucket}.s3.amazonaws.com/${this.avatar}`;
+                return `https://${awsConfig.s3.bucket}.s3.amazonaws.com/avatar/${this.avatar}`;
             default:
                 return null;
         }

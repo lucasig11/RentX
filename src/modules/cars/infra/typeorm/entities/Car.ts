@@ -87,7 +87,7 @@ export default class Car {
                 case 'disk':
                     return `${process.env.API_URL}/files/cars/${image.filename}`;
                 case 's3':
-                    return `https://${awsConfig.s3.bucket}.s3.amazonaws.com/${image.filename}`;
+                    return `https://${awsConfig.s3.bucket}.s3.amazonaws.com/cars/${image.filename}`;
                 default:
                     return null;
             }
