@@ -54,4 +54,4 @@ jobs:
             cd ~/ignite-app/RentX
             yarn
             yarn typeorm migration:run
-            pm2 restart rentx_app
+            ~/.nvm/versions/node/v16.3.0/bin/pm2 restart rentx_app --update-env
