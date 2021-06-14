@@ -124,6 +124,31 @@
                 }
             }
         },
+        "/users/profile": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Show authenticated user profile info",
+                "responses": {
+                    "200": {
+                        "description": "User profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/avatar": {
             "patch": {
                 "security": [
@@ -533,7 +558,10 @@
                     "type": "string",
                     "format": "email"
                 },
-                "avatar": {
+                "driver_license": {
+                    "type": "string"
+                },
+                "avatar_url": {
                     "oneOf": [
                         {
                             "type": "string"
@@ -542,26 +570,14 @@
                             "type": "null"
                         }
                     ]
-                },
-                "driver_license": {
-                    "type": "string"
-                },
-                "is_admin": {
-                    "type": "boolean"
-                },
-                "created_at": {
-                    "type": "string",
-                    "format": "date-time"
                 }
             },
             "example": {
-                "id": "e8461311-19ea-4e31-be7d-2c5a58e8818a",
-                "name": "user",
-                "email": "user@email.com",
-                "avatar": null,
-                "driver_license": "xxxxxxx",
-                "is_admin": false,
-                "created_at": "2021-05-27T03:22:39.785Z"
+                "id": "a106b745-61aa-474b-a19f-d66d2af39d46",
+                "name": "Alvin Colon",
+                "email": "rune@uwokzuk.tz",
+                "driver_license": "NNZ1svO",
+                "avatar_url": "https://localhost:3333/avatar/6303f9d1dcbf6ae5ba2b-img.png"
             }
         },
         "Specification": {
