@@ -540,6 +540,32 @@
                         "description": "Invalid or missing JWT token"
                     }
                 }
+            },
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Rental"
+                ],
+                "summary": "Show authenticated user rentals",
+                "responses": {
+                    "200": {
+                        "description": "User rentals",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Rental"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
