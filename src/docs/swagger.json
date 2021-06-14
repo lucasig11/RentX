@@ -76,6 +76,56 @@
                 }
             }
         },
+        "/sessions/refresh-token": {
+            "post": {
+                "tags": ["Authentication"],
+                "summary": "Refresh authentication token",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiYWRtaW5AcmVudHguY29tIiwiaWF0IjoxNjIzNjI3OTMwLCJleHAiOjE2MjYyMTk5MzAsInN1YiI6IjQwZjJmNTlmLTRlYWYtNDdmMC1hYzhmLWRkMGVmZWFlZWE3ZiJ9.srRXm7ZfstvVsPIWXpQeS2rfwAzd-TQHpMQMdeZDN8E"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "New token generated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "refresh_token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiYWRtaW5AcmVudHguY29tIiwiaWF0IjoxNjIzNjI3OTMwLCJleHAiOjE2MjYyMTk5MzAsInN1YiI6IjQwZjJmNTlmLTRlYWYtNDdmMC1hYzhmLWRkMGVmZWFlZWE3ZiJ9.srRXm7ZfstvVsPIWXpQeS2rfwAzd-TQHpMQMdeZDN8E",
+                                        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoibHVjYXNmb25zZWNhcmRAaWNsb3VkLmNvbSIsImlhdCI6MTYyMzIwMzYyOCwiZXhwIjoxNjI1Nzk1NjI4LCJzdWIiOiI2ZDE4NmM2OS05Nzk0LTRlYjYtYmMzMy0yMjBiYzA1NDc2MWQifQ.sQtRJTQvxGjcIKYb4DSY4CAcrDPwYcRyGlRuu6UTUY0"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid refresh-token"
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "tags": [
